@@ -95,7 +95,10 @@ let keyDownHandler = (event) => {
 }
 
 let keyUpHandler = (event) => {
-
+    if (event.code == 'CapsLock') {
+        // change letter buttons
+        letters.forEach((i) => i.classList.toggle('hidden'));
+    }
     if (event.code == 'Space') {
         document.getElementById(event.code).classList.remove('pressed');
     } else {
