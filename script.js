@@ -1,7 +1,13 @@
-const _macKeyboard = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace' ,'',
+const _macKeysLayout = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
     'Tab', 'q Q', 'w W', 'e E', 'r R', 't T', 'y Y', 'u U', 'i I', 'o O', 'p P', '[ {', '] }', '',
     'CapsLock', 'a A', 's S', 'd D', 'f F', 'g G', 'h H', 'j J', 'k K', 'l L', '; :', '\' \"', '\\ |', '',
-    'Shift', '` ˜', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', ', <', '. >', '/ ?', 'Enter', '', 
+    'Shift', '` ˜', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', ', <', '. >', '/ ?', 'Enter', '',
+    'Control', 'Alt', 'Meta', 'Space'];
+
+const _ruKeysLayout = ['ё Ё', '1 !', '2 "', '3 №', '4 ;', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
+    'Tab', 'й Й', 'ц Ц', 'у У', 'к К', 'е Е', 'н Н', 'г Г', 'ш Ш', 'щ Щ', 'з З', 'х Х', 'ъ Ъ',
+    'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '\\ /', '',
+    'Shift', '] [', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', '. ,', 'Enter', '',
     'Control', 'Alt', 'Meta', 'Space'];
 
 function createKeyboard(keysArray) {
@@ -22,11 +28,11 @@ function createKeyboard(keysArray) {
     function keyType(button) {
         // add extra width style for buttons
         // add permament 'press' on 'click' event
-        if (button == '') { console.log('ITS NEW LINE'); return 'new line';}
+        if (button == '') { console.log('ITS NEW LINE'); return 'new line'; }
         if (['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'].includes(button.toString())) {
             return 'command';
         }
-        if ('qwertyuiopasdfghjklzxcvbnm'.split('').includes(button.toString().toLowerCase())) {
+        if ('qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('').includes(button.toString().toLowerCase())) {
             return 'letter';
         }
         else { return 'simbol'; }
@@ -52,7 +58,9 @@ function createKeyboard(keysArray) {
 // ********************** //
 // keyboard event handler //
 let keyDownHandler = (event) => {
-
+    if ((event.ctrlKey && event.altKey && event.shiftKey)){
+        changeLanguage();
+    }
     if (event.code == 'CapsLock') {
         // change letter buttons
         letters.forEach((i) => i.classList.toggle('hidden'));
@@ -87,7 +95,7 @@ let keyDownHandler = (event) => {
             document.getElementById('text-area').value += '\t';
             break;
         default:
-        if (event.key.length <= 1) {
+            if (event.key.length <= 1) {
                 document.getElementById('text-area').value += event.key;
             }
             break;
@@ -95,11 +103,20 @@ let keyDownHandler = (event) => {
 }
 
 let keyUpHandler = (event) => {
-
     if (event.code == 'Space') {
         document.getElementById(event.code).classList.remove('pressed');
     } else {
         document.getElementById(event.key).classList.toggle('pressed');
+    }
+    if (event.key == 'Shift') {
+        // simbol buttons toggle
+        keys.forEach((i) => (i.classList.toggle('hidden')));
+        // toggle letter buttons 
+        letters.forEach((i) => (i.classList.toggle('hidden')));
+    }
+    if (event.code == 'CapsLock') {
+        // change letter buttons
+        letters.forEach((i) => i.classList.toggle('hidden'));
     }
 }
 
@@ -151,7 +168,6 @@ let mouseUpHandler = (event) => {
 
 
 
-let keyboardWrapper = document.createElement('div');
 let textArea = document.createElement('textarea');
 // block mouse focus and direct input
 textArea.disabled = true;
@@ -159,7 +175,17 @@ textArea.id = 'text-area';
 
 
 // create markup and set keyboard layout //
-document.body.append(textArea, createKeyboard(_macKeyboard));
+let engKeyboard = createKeyboard(_macKeysLayout); 
+let ruKeyboard = createKeyboard(_ruKeysLayout);
+ruKeyboard.classList.add('hidden');
+
+document.body.append(textArea, engKeyboard, ruKeyboard);
+
+
+function changeLanguage(){
+    engKeyboard.classList.toggle('hidden');
+    ruKeyboard.classList.toggle('hidden');
+}
 
 // nodes arrays by behavior  
 const keys = [...document.getElementsByClassName('simbol')];
@@ -172,5 +198,7 @@ document.addEventListener('keyup', keyUpHandler);
 // mouse events listeners
 [...keys, ...letters, ...commands].forEach((item) => item.addEventListener('mousedown', mouseDownHandler));
 [...keys, ...letters, ...commands].forEach((item) => item.addEventListener('mouseup', mouseUpHandler));
+// checkbox event (keyboard layout)
+document.getElementById('switch').addEventListener('mousedown', changeLanguage);
 // disable text selecting by double click
 [...keys, ...letters, ...commands].forEach((item) => item.addEventListener('dblclick', () => (false)));
