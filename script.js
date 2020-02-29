@@ -10,10 +10,38 @@ const _ruKeysLayout = ['ё Ё', '1 !', '2 "', '3 №', '4 ;', '5 %', '6 :', '7 ?
     'Shift', '] [', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', '. ,', 'Enter', '',
     'Control', 'Alt', 'Meta', 'Space'];
 
-function createKeyboard(keysArray) {
+
+let textArea = document.createElement('textarea');
+textArea.disabled = true; // block mouse focus and direct input
+textArea.id = 'text-area';
+
+// create markup and set keyboard layout //
+let engKeyboard = createKeyboard(_macKeysLayout); 
+let ruKeyboard = createKeyboard(_ruKeysLayout);
+ruKeyboard.classList.add('hidden');
+document.body.append(textArea, engKeyboard, ruKeyboard);
+
+// nodes arrays by behavior  
+const simbols = [...document.getElementsByClassName('simbol')];
+const letters = [...document.getElementsByClassName('letter')];
+const commands = [...document.getElementsByClassName('command')];
+
+// keyboard events listeners
+document.addEventListener('keydown', keyDownHandler);
+document.addEventListener('keyup', keyUpHandler);
+// mouse events listeners
+[...simbols, ...letters, ...commands].forEach((item) => item.addEventListener('mousedown', mouseDownHandler));
+[...simbols, ...letters, ...commands].forEach((item) => item.addEventListener('mouseup', mouseUpHandler));
+// checkbox event (keyboard layout)
+document.getElementById('lang').addEventListener('mousedown', changeLanguage);
+// disable text selecting by double click
+[...simbols, ...letters, ...commands].forEach((item) => item.addEventListener('dblclick', () => (false)));
+
+
+function createKeyboard(keysLayout) {
     let keyboard = document.createElement('div');
     keyboard.classList.add('keyboard');
-    keysArray.forEach((item) => {
+    keysLayout.forEach((item) => {
         item = item.split(' ');
         let lower = createKey(item[0] || item); // item if control button
         let upper = createKey(item[1] || item); // and item not an array
@@ -25,115 +53,102 @@ function createKeyboard(keysArray) {
 
     // ********************************* //
     // return string with type of button //
+    // add extra width style for buttons
+    // add permament 'press' on 'click' event
     function keyType(button) {
-        // add extra width style for buttons
-        // add permament 'press' on 'click' event
-        if (button == '') { console.log('ITS NEW LINE'); return 'new line'; }
-        if (['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'].includes(button.toString())) {
+        button = button.toString();
+        let alphabet = 'qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('');
+        let controls = ['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'];
+        
+        if (button == '') { 
+            return 'new line'; 
+        }
+        if (controls.includes(button)) {
             return 'command';
         }
-        if ('qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('').includes(button.toString().toLowerCase())) {
+        if (alphabet.includes(button.toLowerCase())) {
             return 'letter';
         }
-        else { return 'simbol'; }
+        return 'simbol'; 
     }
+    
     // *********************************** //
     // return SpanHTMLElement (key button) //
-    function createKey(simbol) {
-        let htmlFragment = document.createElement('span');
-        if (keyType(simbol) == 'new line') {
+    function createKey(type) {
+        let span = document.createElement('span');
+        if (keyType(type) == 'new line') {
             return document.createElement('br')
         }
-        htmlFragment.innerHTML = simbol;
-        htmlFragment.id = simbol;
-        htmlFragment.classList.add(keyType(simbol));
-        return htmlFragment;
+        span.innerHTML = type;
+        span.id = type;
+        span.classList.add(keyType(type));
+        return span;
     }
 }
 
-
-
-
-
 // ********************** //
 // keyboard event handler //
-let keyDownHandler = (event) => {
-    if ((event.ctrlKey && event.altKey && event.shiftKey)){
+function keyDownHandler(event) {
+    if (event.altKey && event.shiftKey){
         changeLanguage();
     }
-    if (event.code == 'CapsLock') {
-        // change letter buttons
+    if (event.code == 'CapsLock') {     // change letter buttons 
         letters.forEach((i) => i.classList.toggle('hidden'));
     }
-    if (event.key == 'Tab') {
-        // avoid focus by TAB button
-        event.preventDefault(); // Tab focus disabling
+    if (event.key == 'Tab') {           // avoid focus by TAB button
+        event.preventDefault();         // Tab focus disabling
     }
-    if (event.key == 'Shift') {
-        // simbol buttons toggle
-        keys.forEach((i) => (i.classList.toggle('hidden')));
-        // toggle letter buttons 
-        letters.forEach((i) => (i.classList.toggle('hidden')));
+    if (event.key == 'Shift') {         // simbol & letters buttons toggle
+        [...simbols, ...letters].forEach((i) => (i.classList.toggle('hidden')));
     }
-    if (event.code == 'Space') {
-        // find element not by 'event.code' == "Space" 
-        // because event.key == ' ';
+    if (event.code == 'Space') { 
+        // find element not by 'event.code' == "Space" because event.key == ' ';
         document.getElementById(event.code).classList.add('pressed');
     } else {
         document.getElementById(event.key).classList.toggle('pressed');
     }
     // add .key to textarea
+    let textarea = document.getElementById('text-area');
     switch (event.key) {
         case 'Backspace':
-            let area = document.getElementById('text-area');
-            area.value = area.value.slice(0, -1);
+            textarea.value = textarea.value.slice(0, -1);
             break;
         case 'Enter':
-            document.getElementById('text-area').value += '\n';
+            textarea.value += '\n';
             break;
         case 'Tab':
-            document.getElementById('text-area').value += '\t';
+            textarea.value += '\t';
             break;
         default:
             if (event.key.length <= 1) {
-                document.getElementById('text-area').value += event.key;
+                textarea.value += event.key;
             }
-            break;
     }
 }
 
-let keyUpHandler = (event) => {
+function keyUpHandler(event) {
     if (event.code == 'Space') {
         document.getElementById(event.code).classList.remove('pressed');
     } else {
         document.getElementById(event.key).classList.toggle('pressed');
     }
     if (event.key == 'Shift') {
-        // simbol buttons toggle
-        keys.forEach((i) => (i.classList.toggle('hidden')));
-        // toggle letter buttons 
-        letters.forEach((i) => (i.classList.toggle('hidden')));
+        [...simbols, ...letters].forEach((i) => (i.classList.toggle('hidden'))); // simbol & letters toggle
     }
     if (event.code == 'CapsLock') {
-        // change letter buttons
-        letters.forEach((i) => i.classList.toggle('hidden'));
+        letters.forEach((i) => i.classList.toggle('hidden')); // change letter buttons
     }
 }
 
-
-
-
 // ******************* //
 // mouse event handler // 
-let mouseDownHandler = (event) => {
-    event.currentTarget.onmousedown = () => (false);
-    event.currentTarget.ondbclick = () => (false);
+function mouseDownHandler(event) {
     event.currentTarget.classList.toggle('pressed');
-    let textArea = document.getElementById('text-area');
-    // mouse click by buttons add text to textarea
-    switch (event.currentTarget.id) {
+    let textarea = document.getElementById('text-area');
+
+    switch (event.currentTarget.id) {   // mouse click by buttons add text to textarea
         case 'Backspace':
-            textArea.value = textArea.value.slice(0, -1);
+            textarea.value = textarea.value.slice(0, -1);
             break;
         case 'Enter':
             textArea.value += '\n';
@@ -144,61 +159,28 @@ let mouseDownHandler = (event) => {
         case 'Space':
             textArea.value += ' ';
             break;
-        default:
-            // if letter add letter value
+        default:                        // if letter add letter value
             if (event.currentTarget.id.length <= 1) {
-                textArea.value += event.currentTarget.id;
+                textarea.value += event.currentTarget.id;
             }
-            break;
     }
     // toggle letters / keys to upper case
     if (event.currentTarget.id == 'CapsLock') {
         letters.forEach((i) => i.classList.toggle('hidden'));
     }
     if (event.currentTarget.id == 'Shift') {
-        [...keys, ...letters].forEach((i) => i.classList.toggle('hidden'));
+        [...simbols, ...letters].forEach((i) => i.classList.toggle('hidden'));
     }
 
 };
-let mouseUpHandler = (event) => {
+function mouseUpHandler(event) {
     if (!event.currentTarget.classList.contains('command')) {
         event.currentTarget.classList.toggle('pressed');
     }
 };
 
-
-
-let textArea = document.createElement('textarea');
-// block mouse focus and direct input
-textArea.disabled = true;
-textArea.id = 'text-area';
-
-
-// create markup and set keyboard layout //
-let engKeyboard = createKeyboard(_macKeysLayout); 
-let ruKeyboard = createKeyboard(_ruKeysLayout);
-ruKeyboard.classList.add('hidden');
-
-document.body.append(textArea, engKeyboard, ruKeyboard);
-
-
 function changeLanguage(){
     engKeyboard.classList.toggle('hidden');
     ruKeyboard.classList.toggle('hidden');
+    document.getElementById('lang').classList.toggle('hover');
 }
-
-// nodes arrays by behavior  
-const keys = [...document.getElementsByClassName('simbol')];
-const letters = [...document.getElementsByClassName('letter')];
-const commands = [...document.getElementsByClassName('command')];
-
-// keyboard events listeners
-document.addEventListener('keydown', keyDownHandler);
-document.addEventListener('keyup', keyUpHandler);
-// mouse events listeners
-[...keys, ...letters, ...commands].forEach((item) => item.addEventListener('mousedown', mouseDownHandler));
-[...keys, ...letters, ...commands].forEach((item) => item.addEventListener('mouseup', mouseUpHandler));
-// checkbox event (keyboard layout)
-document.getElementById('switch').addEventListener('mousedown', changeLanguage);
-// disable text selecting by double click
-[...keys, ...letters, ...commands].forEach((item) => item.addEventListener('dblclick', () => (false)));
