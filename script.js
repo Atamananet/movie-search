@@ -143,10 +143,10 @@ function keyUpHandler(event) {
 // ******************* //
 // mouse event handler // 
 function mouseDownHandler(event) {
-    event.currentTarget.classList.toggle('pressed');
+    this.classList.toggle('pressed');
     let textarea = document.getElementById('text-area');
 
-    switch (event.currentTarget.id) {   // mouse click by buttons add text to textarea
+    switch (this.id) {   // mouse click by buttons add text to textarea
         case 'Backspace':
             textarea.value = textarea.value.slice(0, -1);
             break;
@@ -160,22 +160,22 @@ function mouseDownHandler(event) {
             textArea.value += ' ';
             break;
         default:                        // if letter add letter value
-            if (event.currentTarget.id.length <= 1) {
-                textarea.value += event.currentTarget.id;
+            if (this.id.length <= 1) {
+                textarea.value += this.id;
             }
     }
     // toggle letters / keys to upper case
-    if (event.currentTarget.id == 'CapsLock') {
+    if (this.id == 'CapsLock') {
         letters.forEach((i) => i.classList.toggle('hidden'));
     }
-    if (event.currentTarget.id == 'Shift') {
+    if (this.id == 'Shift') {
         [...simbols, ...letters].forEach((i) => i.classList.toggle('hidden'));
     }
 
 };
 function mouseUpHandler(event) {
-    if (!event.currentTarget.classList.contains('command')) {
-        event.currentTarget.classList.toggle('pressed');
+    if (!this.classList.contains('command')) {
+        this.classList.toggle('pressed');
     }
 };
 
