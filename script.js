@@ -1,7 +1,7 @@
-const _macKeyboard = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace' ,'',
+const macKeyboard = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
     'Tab', 'q Q', 'w W', 'e E', 'r R', 't T', 'y Y', 'u U', 'i I', 'o O', 'p P', '[ {', '] }', '',
     'CapsLock', 'a A', 's S', 'd D', 'f F', 'g G', 'h H', 'j J', 'k K', 'l L', '; :', '\' \"', '\\ |', '',
-    'Shift', '` ˜', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', ', <', '. >', '/ ?', 'Enter', '', 
+    'Shift', '` ˜', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', ', <', '. >', '/ ?', 'Enter', '',
     'Control', 'Alt', 'Meta', 'Space'];
 
 function createKeyboard(keysArray) {
@@ -22,7 +22,7 @@ function createKeyboard(keysArray) {
     function keyType(button) {
         // add extra width style for buttons
         // add permament 'press' on 'click' event
-        if (button == '') { console.log('ITS NEW LINE'); return 'new line';}
+        if (button == '') { console.log('ITS NEW LINE'); return 'new line'; }
         if (['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'].includes(button.toString())) {
             return 'command';
         }
@@ -87,7 +87,7 @@ let keyDownHandler = (event) => {
             document.getElementById('text-area').value += '\t';
             break;
         default:
-        if (event.key.length <= 1) {
+            if (event.key.length <= 1) {
                 document.getElementById('text-area').value += event.key;
             }
             break;

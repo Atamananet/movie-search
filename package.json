@@ -1,0 +1,25 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "my multilanguage virtual keyboard",
+  "main": "script.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Atamananet/Virtual-Keyboard.git"
+  },
+  "author": "Storozhenko Vladimir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Atamananet/Virtual-Keyboard/issues"
+  },
+  "homepage": "https://github.com/Atamananet/Virtual-Keyboard#readme"
+}
