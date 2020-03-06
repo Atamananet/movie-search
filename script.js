@@ -56,7 +56,7 @@ function createKeyboard(keysLayout) {
     // add extra width style for buttons
     // add permament 'press' on 'click' event
     function keyType(button) {
-        button = button.toString();
+        currButton = button.toString();
         let alphabet = 'qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('');
         let controls = ['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'];
         
@@ -108,20 +108,19 @@ function keyDownHandler(event) {
         document.getElementById(event.key).classList.toggle('pressed');
     }
     // add .key to textarea
-    let textarea = document.getElementById('text-area');
     switch (event.key) {
         case 'Backspace':
-            textarea.value = textarea.value.slice(0, -1);
+            textArea.value = textArea.value.slice(0, -1);
             break;
         case 'Enter':
-            textarea.value += '\n';
+            textArea.value += '\n';
             break;
         case 'Tab':
-            textarea.value += '\t';
+            textArea.value += '\t';
             break;
         default:
             if (event.key.length <= 1) {
-                textarea.value += event.key;
+                textArea.value += event.key;
             }
     }
 }
@@ -144,11 +143,10 @@ function keyUpHandler(event) {
 // mouse event handler // 
 function mouseDownHandler(event) {
     this.classList.toggle('pressed');
-    let textarea = document.getElementById('text-area');
-
+    
     switch (this.id) {   // mouse click by buttons add text to textarea
         case 'Backspace':
-            textarea.value = textarea.value.slice(0, -1);
+            textArea.value = textArea.value.slice(0, -1);
             break;
         case 'Enter':
             textArea.value += '\n';
@@ -161,7 +159,7 @@ function mouseDownHandler(event) {
             break;
         default:                        // if letter add letter value
             if (this.id.length <= 1) {
-                textarea.value += this.id;
+                textArea.value += this.id;
             }
     }
     // toggle letters / keys to upper case
