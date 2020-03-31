@@ -5,7 +5,7 @@ const eng = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '
   'Control', 'Alt', 'Meta', 'Space'];
 
 const ru = ['ё Ё', '1 !', '2 "', '3 №', '4 ;', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
-  'Tab', 'й Й', 'ц Ц', 'у У', 'к К', 'е Е', 'н Н', 'г Г', 'ш Ш', 'щ Щ', 'з З', 'х Х', 'ъ Ъ',
+  'Tab', 'й Й', 'ц Ц', 'у У', 'к К', 'е Е', 'н Н', 'г Г', 'ш Ш', 'щ Щ', 'з З', 'х Х', 'ъ Ъ', '',
   'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '\\ /', '',
   'Shift', '] [', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', '. ,', 'Enter', '',
   'Control', 'Alt', 'Meta', 'Space'];
@@ -78,17 +78,31 @@ const print = (key) => {
   }
 };
 
+const togglePressed = (event, add = false) => {
+  let arr = [...eng, ...ru].filter((i) => i.split(' ').includes(event.key));
+  if (![...arr][0].includes(' ')) {
+    document.querySelectorAll(`#${event.key}`).forEach((i) => i.classList.toggle('pressed'));
+  } else {
+    let index = eng.indexOf(arr.join());
+    if (index >= 0) { arr = [...arr, ru[index]]; } else {
+      index = ru.indexOf(arr.join());
+      arr = [...arr, eng[index]];
+    }
+    arr.filter((i) => i).join(' ').split(' ').forEach((item) => {
+      if (add) { document.getElementById(item).classList.add('pressed'); }
+      if (!add) { document.getElementById(item).classList.remove('pressed'); }
+    });
+  }
+};
+
 const keydownHandler = (event) => { // keyboard event handler
   // avoid focus by TAB button
   if (event.key === 'Tab') { event.preventDefault(); }
   if (event.key === 'Shift') { [...characters, ...letters].forEach(toggleHidden); }
   if (event.code === 'CapsLock') { letters.forEach(toggleHidden); }
   if (event.code === 'Space') { // find element not by 'event.code' == "Space"
-    document.getElementById(event.code).classList.add('pressed'); // because event.key == ' ';
-  } else {
-    document.getElementById(event.key).classList.toggle('pressed'); // define action
-  }
-
+    document.querySelectorAll(`#${event.code}`).forEach((i) => i.classList.add('pressed')); // because event.key == ' ';
+  } else { togglePressed(event, true); }
   print(event.key); // add .key to textarea
 };
 
@@ -96,10 +110,8 @@ const keyupHandler = (event) => {
   if (event.code === 'CapsLock') { letters.forEach(toggleHidden); }
   if (event.key === 'Shift') { [...characters, ...letters].forEach(toggleHidden); }
   if (event.code === 'Space') {
-    document.getElementById(event.code).classList.remove('pressed');
-  } else {
-    document.getElementById(event.key).classList.remove('pressed');
-  }
+    document.querySelectorAll(`#${event.code}`).forEach((i) => i.classList.remove('pressed')); // because event.key == ' ';
+  } else { togglePressed(event); }
 };
 
 const mousedownHandler = (event) => {
