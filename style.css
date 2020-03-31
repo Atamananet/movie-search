@@ -108,3 +108,17 @@ br {
     color: rgb(245, 135, 116);
     border-color: rgb(245, 135, 116);
 }
+
+.loader {
+    min-width: 40%;
+    margin: auto;
+    padding-left: 10px;
+}
+.description, .combination {
+    display: inline-block;
+}
+
+.description {
+    padding-left: 10px;
+    border-left: 10px solid yellow;
+}

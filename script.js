@@ -18,10 +18,7 @@ textArea.disabled = true; // block mouse focus and direct input
 textArea.id = 'text-area';
 
 const toggleHidden = (element) => element.classList.toggle('hidden');
-const changeLanguage = () => {
-  [...document.querySelectorAll('.keyboard')].forEach(toggleHidden);
-  document.getElementById('lang').classList.toggle('hover');
-};
+const changeLanguage = () => { [...document.querySelectorAll('.keyboard')].forEach(toggleHidden); };
 
 // return string with type of button
 const keyType = (button) => {
@@ -82,7 +79,6 @@ const print = (key) => {
 };
 
 const keydownHandler = (event) => { // keyboard event handler
-  if (event.altKey && event.shiftKey) { changeLanguage(); }
   // avoid focus by TAB button
   if (event.key === 'Tab') { event.preventDefault(); }
   if (event.key === 'Shift') { [...characters, ...letters].forEach(toggleHidden); }
@@ -125,10 +121,47 @@ const ruKeyboard = createKeyboard(ru);
 ruKeyboard.classList.add('hidden');
 document.body.append(textArea, engKeyboard, ruKeyboard);
 
+const btnCombination = new Set();
+const combination = document.querySelector('.combination');
+function setBtnCombination(event) {
+  if (event.shiftKey) { btnCombination.add('shiftKey'); }
+  if (event.ctrlKey) { btnCombination.add('ctrlKey'); }
+  if (event.altKey) { btnCombination.add('altKey'); }
+  if (event.metaKey) { btnCombination.add('metaKey'); }
+  if (event.code === 'Space') { btnCombination.add('space'); }
+}
+
+const langChangeHandler = (e) => {
+  const a = [...btnCombination];
+  if (a.every((i) => e[i])) changeLanguage();
+};
+
+document.addEventListener('keydown', setBtnCombination);
+
+document.addEventListener('keydown', () => {
+  if (btnCombination.size < 2) { return; }
+  setTimeout(() => {
+    combination.innerHTML = [...btnCombination].join(' + ');
+    document.querySelector('.description').style.borderLeftColor = 'green';
+    document.removeEventListener('keydown', setBtnCombination);
+    document.addEventListener('keydown', langChangeHandler);
+  }, 500);
+  setTimeout(() => { document.querySelector('.request').style.display = 'none'; }, 3000);
+});
+
 // nodes arrays by behavior
 characters = [...document.getElementsByClassName('simbol')];
 letters = [...document.getElementsByClassName('letter')];
 commands.concat(document.getElementsByClassName('command'));
+// toggle language if not english
+document.addEventListener('keydown', (event) => {
+  if (event.key.toUpperCase() === event.key) {
+    letters.forEach(toggleHidden);
+  }
+  if (event.code[event.code.length - 1].toLowerCase() !== event.key.toLowerCase()) {
+    changeLanguage();
+  }
+}, { once: true });
 
 // keyboard events listeners
 document.addEventListener('keydown', keydownHandler);
@@ -137,6 +170,6 @@ document.addEventListener('keyup', keyupHandler);
 [...characters, ...letters, ...commands].forEach((item) => item.addEventListener('mousedown', mousedownHandler));
 [...characters, ...letters, ...commands].forEach((item) => item.addEventListener('mouseup', mouseupHandler));
 // checkbox event (keyboard layout)
-document.getElementById('lang').addEventListener('mousedown', changeLanguage);
+// document.getElementById('lang').addEventListener('mousedown', changeLanguage);
 // disable text selecting by double click
 [...characters, ...letters, ...commands].forEach((item) => item.addEventListener('dblclick', () => (false)));
