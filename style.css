@@ -1,4 +1,4 @@
-body{
+body {
     padding-top: 100px;
     background-color: #f7f5f5;
     width: 80%;
@@ -11,19 +11,21 @@ body{
     -ms-user-select: none;
     user-select: none;
 }
+
 .keyboard {
     width: 920px;
     padding: 10px;
     background-color: silver;
 }
-.simbol, .letter, .command{
+
+.simbol, .letter, .command {
     display: inline-block;
     margin: 5px;
     width: 50px;
     height: 50px;
     text-align: center;
     line-height: 50px;
-    border:1px solid  silver;
+    border: 1px solid silver;
     border-radius: 5px;
     background-color: dimgrey;
     color: white;
@@ -31,48 +33,66 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
-.simbol:not(.pressed):hover, .letter:not(.pressed):hover, .command:not(.pressed):hover{
+
+.simbol:not(.pressed):hover,
+.letter:not(.pressed):hover,
+.command:not(.pressed):hover {
     background-color: rgb(245, 135, 116);
 }
+
 .command {
     width: 112px;
 }
+
 .hidden {
     display: none;
 }
+
 .pressed {
     background-color: tomato;
     border: 1px solid rgb(192, 152, 152);
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.8);
+    -moz-box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.8);
+    box-shadow: 0px 0px 10px 5px rgba(255,255,255,0.8);
 }
-span{
+
+span {
     cursor: pointer;
 }
-textarea{
+
+textarea {
     width: 935px;
     height: 120px;
     margin: auto;
     font-size: 18px;
     letter-spacing: 1px;
 }
-#Space{
+
+#Space {
     width: 660px;
 }
-#Backspace, #Enter{
+
+#Backspace, #Enter {
     width: 100px;
 }
+
 #Shift {
     width: 110px;
 }
-#Alt, #Control, #Meta{
+
+#Alt, #Control, #Meta {
     width: 70px;
 }
-#Tab, #CapsLock{
+
+#Tab, #CapsLock {
     width: 160px;
 }
 
-br{
+br {
     background-color: black;
-}#lang {
+}
+
+#lang {
     /* display: block; */
     padding: 0 10px;
     color: dimgrey;
@@ -83,7 +103,8 @@ br{
     border: 2px solid dimgrey;
     border-radius: 15px;
 }
-#lang:hover, #lang.hover{
+
+#lang:hover, #lang.hover {
     color: rgb(245, 135, 116);
     border-color: rgb(245, 135, 116);
 }
