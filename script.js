@@ -33,14 +33,14 @@ const keyType = (button) => {
 };
 
 // return SpanHTMLElement (key button) //
-const createKey = (type) => {
-  if (keyType(type) === 'new line') {
+const createKey = (char) => {
+  if (keyType(char) === 'new line') {
     return document.createElement('br');
   }
   const span = document.createElement('span');
-  span.innerHTML = type;
-  span.id = type;
-  span.classList.add(keyType(type));
+  span.innerHTML = char;
+  span.id = char;
+  span.classList.add(keyType(char));
 
   return span;
 };
@@ -73,24 +73,33 @@ const print = (key) => {
     case 'Tab':
       textarea.value += '\t';
       break;
+    case ' ':
+      textarea.value += ' ';
+      break;
     default:
-      if (key.length <= 1) { textarea.value += key; }
+      if (key.length < 2) { // press CHOISING language button
+        const pressedBtn = document.querySelector('.keyboard:not(.hidden) .pressed:not(.hidden):not(.command)');
+        textarea.value += (pressedBtn) ? pressedBtn.id : key;
+      }
   }
 };
-
+// DANGEROUS !!! BUTTHEARD !!!
 const togglePressed = (event, add = false) => {
-  let arr = [...eng, ...ru].filter((i) => i.split(' ').includes(event.key));
-  if (![...arr][0].includes(' ')) {
+  let pressed = [...eng, ...ru].filter((i) => i.split(' ').includes(event.key)); // find pressed keys in layout
+  const include = (pressed.length) ? [...pressed][0].includes(' ') : false;
+  if (!include) { // if command button
     document.querySelectorAll(`#${event.key}`).forEach((i) => i.classList.toggle('pressed'));
   } else {
-    let index = eng.indexOf(arr.join());
-    if (index >= 0) { arr = [...arr, ru[index]]; } else {
-      index = ru.indexOf(arr.join());
-      arr = [...arr, eng[index]];
+    let index = eng.indexOf(pressed.join()); // find button in eng layout
+    if (index === -1) { // if not add russian button to pressed
+      index = ru.indexOf(pressed.join());
+      pressed = [...pressed, eng[index]]; // ru & eng - is keyboard layout arrays
+    } else {
+      pressed = [...pressed, ru[index]];
     }
-    arr.filter((i) => i).join(' ').split(' ').forEach((item) => {
-      if (add) { document.getElementById(item).classList.add('pressed'); }
-      if (!add) { document.getElementById(item).classList.remove('pressed'); }
+    pressed.filter((i) => i).join(' ').split(' ').forEach((item) => {
+      const elems = document.querySelectorAll(`[id='${item}']`);
+      elems.forEach((elem) => ((add) ? elem.classList.add('pressed') : elem.classList.remove('pressed')));
     });
   }
 };
@@ -115,6 +124,7 @@ const keyupHandler = (event) => {
 };
 
 const mousedownHandler = (event) => {
+  if (event.target.tagName !== 'SPAN') { return; }
   event.target.classList.toggle('pressed');
   if (event.target.id === 'CapsLock') { letters.forEach(toggleHidden); }
   if (event.target.id === 'Shift') { [...characters, ...letters].forEach(toggleHidden); }
@@ -122,6 +132,7 @@ const mousedownHandler = (event) => {
 };
 
 const mouseupHandler = (event) => {
+  if (event.target.tagName !== 'SPAN') { return; }
   if (!event.target.classList.contains('command')) {
     event.target.classList.toggle('pressed');
   }
@@ -158,17 +169,20 @@ document.addEventListener('keydown', () => {
     document.removeEventListener('keydown', setBtnCombination);
     document.addEventListener('keydown', langChangeHandler);
   }, 500);
-  setTimeout(() => { document.querySelector('.request').style.display = 'none'; }, 3000);
+  setTimeout(() => { document.querySelector('.request').style.opacity = '0'; }, 1000);
 });
 
 // nodes arrays by behavior
 characters = [...document.getElementsByClassName('simbol')];
 letters = [...document.getElementsByClassName('letter')];
 commands.concat(document.getElementsByClassName('command'));
-// toggle language if not english
+
+// toggle layout if not english
+// toggle capslock if on
 document.addEventListener('keydown', (event) => {
   if (event.key.toUpperCase() === event.key) {
     letters.forEach(toggleHidden);
+    document.querySelectorAll('#CapsLock').forEach((i) => i.classList.add('pressed'));
   }
   if (event.code[event.code.length - 1].toLowerCase() !== event.key.toLowerCase()) {
     changeLanguage();
@@ -179,9 +193,5 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keydown', keydownHandler);
 document.addEventListener('keyup', keyupHandler);
 // mouse events listeners
-[...characters, ...letters, ...commands].forEach((item) => item.addEventListener('mousedown', mousedownHandler));
-[...characters, ...letters, ...commands].forEach((item) => item.addEventListener('mouseup', mouseupHandler));
-// checkbox event (keyboard layout)
-// document.getElementById('lang').addEventListener('mousedown', changeLanguage);
-// disable text selecting by double click
-[...characters, ...letters, ...commands].forEach((item) => item.addEventListener('dblclick', () => (false)));
+document.addEventListener('mousedown', mousedownHandler);
+document.addEventListener('mouseup', mouseupHandler);
