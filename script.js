@@ -18,7 +18,11 @@ textArea.disabled = true; // block mouse focus and direct input
 textArea.id = 'text-area';
 
 const toggleHidden = (element) => element.classList.toggle('hidden');
-const changeLanguage = () => { [...document.querySelectorAll('.keyboard')].forEach(toggleHidden); };
+const changeLanguage = () => {
+  const keyboards = [...document.querySelectorAll('.keyboard')];
+  keyboards.forEach(toggleHidden);
+  localStorage.language = (localStorage.language === 'english') ? 'russian' : 'english';
+};
 
 // return string with type of button
 const keyType = (button) => {
@@ -141,8 +145,14 @@ const mouseupHandler = (event) => {
 // create markup and set keyboard layout //
 const engKeyboard = createKeyboard(eng);
 const ruKeyboard = createKeyboard(ru);
-ruKeyboard.classList.add('hidden');
+engKeyboard.classList.add('english', 'hidden');
+ruKeyboard.classList.add('russian', 'hidden');
 document.body.append(textArea, engKeyboard, ruKeyboard);
+
+if (!localStorage.getItem('language')) {
+  localStorage.setItem('language', 'english');
+}
+document.querySelector(`.${localStorage.getItem('language')}`).classList.remove('hidden');
 
 const btnCombination = new Set();
 const combination = document.querySelector('.combination');
