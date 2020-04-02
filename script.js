@@ -4,10 +4,10 @@ const eng = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '
   'Shift', '` ˜', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', ', <', '. >', '/ ?', 'Enter', '',
   'Control', 'Alt', 'Meta', 'Space'];
 
-const ru = ['ё Ё', '1 !', '2 "', '3 №', '4 ;', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
+const ru = ['ё Ё', '1 !', '2 "', '3 №', '4 ❤️️', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
   'Tab', 'й Й', 'ц Ц', 'у У', 'к К', 'е Е', 'н Н', 'г Г', 'ш Ш', 'щ Щ', 'з З', 'х Х', 'ъ Ъ', '',
-  'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '\\ /', '',
-  'Shift', '] [', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', '. ,', 'Enter', '',
+  'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '® ©', '',
+  'Shift', '¥ £', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', '« »', 'Enter', '',
   'Control', 'Alt', 'Meta', 'Space'];
 
 let characters; // simbols keyboard
@@ -38,7 +38,7 @@ const keyType = (button) => {
 // return SpanHTMLElement (key button) //
 const createKey = (char) => {
   if (keyType(char) === 'new line') {
-    return document.createElement('br');
+    return document.createElement('div');
   }
   const span = document.createElement('span');
   span.innerHTML = char;
@@ -96,16 +96,10 @@ const togglePressed = (event, add = false) => {
   } else {
     pressed = [pressed, eng[ru.indexOf(pressed)]];
   }
-  console.log(pressed);
-
-  pressed
-    .filter((i) => i)
-    .join(' ')
-    .split(' ')
-    .forEach((item) => {
-      const elems = document.querySelectorAll(`[id='${item}']`);
-      elems.forEach((elem) => ((add) ? elem.classList.add('pressed') : elem.classList.remove('pressed')));
-    });
+  pressed.filter((i) => i).join(' ').split(' ').forEach((item) => {
+    const elems = document.querySelectorAll(`[id='${item}']`);
+    elems.forEach((elem) => ((add) ? elem.classList.add('pressed') : elem.classList.remove('pressed')));
+  });
 };
 
 const keydownHandler = (event) => { // keyboard event handler
