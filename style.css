@@ -1,7 +1,7 @@
 body {
     padding-top: 100px;
     background-color: #f7f5f5;
-    width: 808px;
+    width: 1008px;
     margin: auto;
     /* disable text selection */
     -webkit-touch-callout: none;
@@ -14,7 +14,9 @@ body {
 }
 
 textarea {
-    width: 842px;
+    position: absolute;
+    bottom: 300px;
+    width: 1006px;
     box-sizing: border-box;
     height: 120px;
     margin: auto;
@@ -23,7 +25,7 @@ textarea {
 }
 
 .keyboard {
-    width: 838px;
+    width: 1006px;
     margin: auto;
     padding: 2px;
     position: absolute;
@@ -32,7 +34,7 @@ textarea {
     background: linear-gradient(90deg, rgba(176, 2, 2, 1) 0%, rgba(138, 196, 79, 1) 25%, rgba(15, 165, 201, 1) 50%, rgba(66, 23, 189, 1) 72%, rgba(255, 0, 0, 1) 100%);
 }
 
-.simbol, .letter, .command {
+.simbol, .letter, .command, .arrow {
     display: inline-block;
     box-sizing: border-box;
     margin: 2px;
@@ -103,29 +105,17 @@ span {
     width: 162px;
 }
 
+#STUB {
+    opacity: 0;
+}
+
 br {
     background-color: black;
 }
 
-#lang {
-    /* display: block; */
-    padding: 0 10px;
-    color: dimgrey;
-    text-decoration: none;
-    font-size: 18px;
-    line-height: 40px;
-    font-family: Arial, Helvetica, sans-serif;
-    border: 2px solid dimgrey;
-    border-radius: 15px;
-}
-
-#lang:hover, #lang.hover {
-    color: rgb(245, 135, 116);
-    border-color: rgb(245, 135, 116);
-}
-
 .loader {
-    min-width: 40%;
+    position: absolute;
+    top: 0;
     margin: auto;
     padding-left: 10px;
 }
@@ -138,11 +128,10 @@ br {
 .combination {
     display: inline-block;
     padding-left: 20px;
-    font-size: 1.4em;
+    font-size: 1em;
 }
 
 .description {
-    font-family: Helvetica, Lato, sans-serif;
     padding-left: 10px;
     border-left: 10px solid yellow;
 }
