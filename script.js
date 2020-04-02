@@ -19,8 +19,7 @@ textArea.id = 'text-area';
 
 const toggleHidden = (element) => element.classList.toggle('hidden');
 const changeLanguage = () => {
-  const keyboards = [...document.querySelectorAll('.keyboard')];
-  keyboards.forEach(toggleHidden);
+  [...document.querySelectorAll('.keyboard')].forEach(toggleHidden);
   localStorage.language = (localStorage.language === 'english') ? 'russian' : 'english';
 };
 
@@ -87,25 +86,26 @@ const print = (key) => {
       }
   }
 };
-// DANGEROUS !!! BUTTHEARD !!!
+
+// DANGEROUS !!! BUTTHURT !!!
 const togglePressed = (event, add = false) => {
-  let pressed = [...eng, ...ru].filter((i) => i.split(' ').includes(event.key)); // find pressed keys in layout
-  const include = (pressed.length) ? [...pressed][0].includes(' ') : false;
-  if (!include) { // if command button
-    document.querySelectorAll(`#${event.key}`).forEach((i) => i.classList.toggle('pressed'));
+  let pressed = [...eng, ...ru].find((i) => i.split(' ').includes(event.key)); // find pressed keys in layout
+
+  if (eng.includes(pressed)) {
+    pressed = [pressed, ru[eng.indexOf(pressed)]];
   } else {
-    let index = eng.indexOf(pressed.join()); // find button in eng layout
-    if (index === -1) { // if not add russian button to pressed
-      index = ru.indexOf(pressed.join());
-      pressed = [...pressed, eng[index]]; // ru & eng - is keyboard layout arrays
-    } else {
-      pressed = [...pressed, ru[index]];
-    }
-    pressed.filter((i) => i).join(' ').split(' ').forEach((item) => {
+    pressed = [pressed, eng[ru.indexOf(pressed)]];
+  }
+  console.log(pressed);
+
+  pressed
+    .filter((i) => i)
+    .join(' ')
+    .split(' ')
+    .forEach((item) => {
       const elems = document.querySelectorAll(`[id='${item}']`);
       elems.forEach((elem) => ((add) ? elem.classList.add('pressed') : elem.classList.remove('pressed')));
     });
-  }
 };
 
 const keydownHandler = (event) => { // keyboard event handler
@@ -189,15 +189,15 @@ commands.concat(document.getElementsByClassName('command'));
 
 // toggle layout if not english
 // toggle capslock if on
-document.addEventListener('keydown', (event) => {
-  if (event.key.toUpperCase() === event.key) {
-    letters.forEach(toggleHidden);
-    document.querySelectorAll('#CapsLock').forEach((i) => i.classList.add('pressed'));
-  }
-  if (event.code[event.code.length - 1].toLowerCase() !== event.key.toLowerCase()) {
-    changeLanguage();
-  }
-}, { once: true });
+// document.addEventListener('keydown', (event) => {
+//   if (event.key.toUpperCase() === event.key) {
+//     letters.forEach(toggleHidden);
+//     document.querySelectorAll('#CapsLock').forEach((i) => i.classList.add('pressed'));
+//   }
+//   if (event.code[event.code.length - 1].toLowerCase() !== event.key.toLowerCase()) {
+//     changeLanguage();
+//   }
+// }, { once: true });
 
 // keyboard events listeners
 document.addEventListener('keydown', keydownHandler);
