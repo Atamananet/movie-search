@@ -114,7 +114,7 @@
           const pressedBtn = document.querySelector('.keyboard:not(.hidden) .pressed:not(.hidden):not(.command)');
           textarea.value += (pressedBtn) ? pressedBtn.id : key; // for simbols
         }
-        if (elem.classList.contains('arrow')) {
+        if (elem && elem.classList.contains('arrow')) {
           textarea.value += elem.innerHTML;
         }
     }
@@ -175,7 +175,8 @@
     const request = document.createElement('p');
     const description = document.createElement('p');
     const combinationEl = document.createElement('code');
-
+    const system = document.createElement('p');
+    system.innerText = 'MacOS, комбинация определяется вами (не менее 2 кнопок, допустимы: Shift, Alt, Ctrl, Cmd / Win (Meta))';
     readme.classList.add('loader');
     request.classList.add('request');
     description.classList.add('description');
@@ -183,7 +184,7 @@
     combinationEl.classList.add('combination');
     request.innerText = 'Please, press buttons combination to switch keyboard layout...';
     description.append(combinationEl);
-    readme.append(request, description);
+    readme.append(request, description, system);
 
     return readme;
   };
