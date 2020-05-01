@@ -13,7 +13,7 @@ const button = document.querySelector('.form-search__button');
 const swiperWrapper = document.querySelector('.swiper-wrapper');
 let searchPage = 0; // search page param
 const mySwiper = new Swiper('.swiper-container', {
-    setWrapperSize: true,
+    autoHeight: true,
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
@@ -26,7 +26,11 @@ const mySwiper = new Swiper('.swiper-container', {
             spaceBetween: 20
         },
         // when window width is >= 640px
-        640: {
+        567: {
+            slidesPerView: 2,
+            spaceBetween: 40
+        },
+        767: {
             slidesPerView: 3,
             spaceBetween: 40
         },
@@ -123,7 +127,14 @@ class Slide {
     async setRating() {
         let response = await fetch(this.url);
         let data = await response.json();
-        this.rating.innerHTML = data.imdbRating !== 'N/A' ? `<i class="fas fa-star"></i>${data.imdbRating}` : 0;
+        if (data.imdbRating === 'N/A') {
+            this.rating.innerHTML = 0;
+        } else {
+            const fromFive = Math.floor(data.imdbRating / 2);
+            const starFull = '<i class="fas fa-star fass_full"></i>';
+            const starPool = '<i class="fas fa-star fass_pool"></i>';
+            this.rating.innerHTML = starFull.repeat(fromFive) + starPool.repeat(5 - fromFive) + data.imdbRating;
+        }
     }
 }
 
