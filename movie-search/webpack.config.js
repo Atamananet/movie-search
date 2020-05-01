@@ -11,11 +11,6 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -44,6 +39,18 @@ const config = {
             loader: 'url-loader',
             options: {
               mimetype: 'image/png'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
             }
           }
         ]
