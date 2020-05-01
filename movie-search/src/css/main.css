@@ -86,6 +86,9 @@ body {
 .fa-star.fass_full {
   color: gold;
 }
+.fa-star-half-alt {
+  color: gold;
+}
 
 .fa-star.fass_pool {
   color: rgb(238, 231, 192);
@@ -112,6 +115,10 @@ body {
 
 .swiper-pagination .swiper-pagination-bullet:nth-child(n+15) {
   display: none;
+}
+
+footer .navbar-brand.github svg {
+  margin-right: 10px;
 }
 
 @media (min-width: 320px) and (max-width: 567px) {
