@@ -1,4 +1,4 @@
-//import 'bootstrap';
+// import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
@@ -6,6 +6,7 @@ import 'swiper/css/swiper.min.css';
 import '../css/main.css';
 import mySwiper from './Swiper';
 import Slide from './Slide';
+import keyboard from './Keyboard';
 
 const apiKey = '1d7bd802'; // private key 
 const yandexApiKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ade7fcb685ee1a79adfe22b16';
@@ -110,3 +111,23 @@ function alertWithMessage(message, type = 'danger') {
     appendFilms(films)
         .finally(() => button.innerHTML = 'Search');
 })();
+
+document.querySelector('.form-search__keyboard').addEventListener('click', (event) => {
+    event.preventDefault();
+
+    if (!document.querySelector('.keyboard')) {
+        keyboard.init();
+        return;
+    }
+
+    const isKeyboardShow = document.querySelector('.keyboard:not([hidden])');
+
+    if (isKeyboardShow) {
+        input.disabled = false;
+        keyboard.hide();
+        return;
+    }
+
+    input.disabled = true;
+    keyboard.show();    
+});

@@ -17,6 +17,14 @@ body {
   padding: 0;
 }
 
+.form-search__keyboard {
+  position: relative;
+  width: 4vw;
+  margin: 0;
+  padding: 0;
+  right: 6vw;
+}
+
 /* .swiper-container {
   margin-bottom: 100px;
 } */
