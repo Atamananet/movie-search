@@ -83,23 +83,18 @@ span {
 }
 
 #Space {
-    width: calc(50vw + 9 * 0.25rem);
-    max-width: calc(50px * 10 + 9 * 0.25rem);
+    width: calc(40vw + 7 * 0.25rem);
+    max-width: calc(50px * 8 + 7 * 0.25rem);
 }
 
-#Backspace, #Enter {
+#Backspace {
     width: calc(10vw + 1 * 0.25rem);
     max-width: calc(100px + 1 * 0.25rem);
 }
 
-#Enter {
-    width: calc(10vw + 0.25rem);
-    max-width: calc(100px + 0.25rem);
-}
-
-#Shift {
-    width: calc(10vw + 1 * 0.25rem);
-    max-width: calc(100px + 0.25rem);
+#Enter, #Shift {
+    width: calc(15vw + 2 * 0.25rem);
+    max-width: calc(150px + 0.25rem);
 }
 
 #Alt, #Control, #Meta {
@@ -113,7 +108,28 @@ span {
 }
 
 #STUB {
-    opacity: 0;
+    display: none;
+}
+
+/* FOR RUSSIAN LAYOUT */
+.russian #Enter {
+    width: calc(10vw + 0.25rem);
+    max-width: calc(100px + 0.25rem);
+}
+
+.russian #Shift {
+    width: calc(10vw + 1 * 0.25rem);
+    max-width: calc(100px + 0.25rem);
+}
+
+.russian #Tab {
+    width: 5vw;
+    max-width: 50px;
+}
+
+.russian  #CapsLock {
+    width: calc(10vw + 0.25rem);
+    max-width: calc(100px + 0.25rem);
 }
 
 br {

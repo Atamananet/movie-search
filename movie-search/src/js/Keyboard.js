@@ -3,16 +3,16 @@ import '../css/keyboard.css';
 class Keyboard {
     constructor(params) {
 
-        this.ENGLISH = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
-            'Tab', 'q Q', 'w W', 'e E', 'r R', 't T', 'y Y', 'u U', 'i I', 'o O', 'p P', '[ {', '] }', '',
-            'CapsLock', 'a A', 's S', 'd D', 'f F', 'g G', 'h H', 'j J', 'k K', 'l L', '; :', '\' "', '\\ |', '',
-            'Shift', '` ˜', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', ', <', '. >', '/ ?', 'Enter', '',
+        this.ENGLISH = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', 'Backspace', '',
+            'Tab', 'q Q', 'w W', 'e E', 'r R', 't T', 'y Y', 'u U', 'i I', 'o O', 'p P', 'STUB', 'STUB', '',
+            'CapsLock', 'a A', 's S', 'd D', 'f F', 'g G', 'h H', 'j J', 'k K', 'l L', '; :', 'STUB', '',
+            'Shift', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', 'Enter', 'STUB', 'STUB', '',
             'Control', 'Alt', 'Meta', 'Space'];
 
-        this.RUSSIAN = ['ё Ё', '1 !', '2 "', '3 №', '4 ❤️️', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', '- _', '= +', 'Backspace', '',
+        this.RUSSIAN = ['ё Ё', '1 !', '2 "', '3 №', '4 ❤️️', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', 'Backspace', '',
             'Tab', 'й Й', 'ц Ц', 'у У', 'к К', 'е Е', 'н Н', 'г Г', 'ш Ш', 'щ Щ', 'з З', 'х Х', 'ъ Ъ', '',
-            'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '® ©', '',
-            'Shift', '¥ £', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', '« »', 'Enter', '',
+            'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '',
+            'Shift', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', 'Enter', '',
             'Control', 'Alt', 'Meta', 'Space'];
 
         this.characters; // simbols keyboard
@@ -55,7 +55,6 @@ class Keyboard {
         const buttons = this.btnCombination;
         if (buttons.every((i) => event[i])) {
             [...document.querySelectorAll('.keyboard')].forEach(this.toggleHidden);
-            //localStorage.language = (localStorage.language === 'english') ? 'russian' : 'english';
         }
     };
 
@@ -69,7 +68,6 @@ class Keyboard {
         if (currBtn === '') { return 'new line'; }
         if (controls.includes(currBtn)) { return 'command'; }
         if (alphabet.includes(currBtn.toLowerCase())) { return 'letter'; }
-        if (arrows.includes(currBtn)) { return 'arrow'; }
 
         return 'simbol';
     };
@@ -104,26 +102,25 @@ class Keyboard {
     };
 
     print(key) {
-        console.log("print");
-        const textarea = this.textArea;
+        const input = this.textArea;
         const elem = document.querySelector(`[id='${key}']`);
         switch (key) {
             case 'Backspace':
-                textarea.value = textarea.value.slice(0, -1);
+                input.value = input.value.slice(0, -1);
                 break;
             case 'Enter':
-                textarea.value += '\n';
+                input.value += '\n';
                 break;
             case 'Tab':
-                textarea.value += '\t';
+                input.value += '\t';
                 break;
             case ' ':
-                textarea.value += ' ';
+                input.value += ' ';
                 break;
             default:
                 if (key.length <= 2) { // letters, simbols, arrows
                     const pressedBtn = document.querySelector('.keyboard:not(.hidden) .pressed:not(.hidden):not(.command)');
-                    textarea.value += (pressedBtn) ? pressedBtn.id : key; // for simbols
+                    input.value += (pressedBtn) ? pressedBtn.id : key; // for simbols
                 }
         }
     };
@@ -199,7 +196,8 @@ class Keyboard {
         this.letters = [...document.getElementsByClassName('letter')];
 
         // keyboard events listeners
-        document.addEventListener('keydown', this.keydownHandler.bind(this));
+        this.handler = this.keydownHandler.bind(this);
+        document.addEventListener('keydown', this.handler);
         document.addEventListener('keyup', this.keyupHandler.bind(this));
         document.addEventListener('keydown', this.langChangeHandler.bind(this));
         // mouse events listeners
@@ -208,6 +206,8 @@ class Keyboard {
     }
 
     show() {
+        document.removeEventListener('keydown', this.handler);
+        document.addEventListener('keydown', this.handler);
         const keyboards = this.keyboards || document.querySelectorAll('.keyboard');
         keyboards.forEach((keyboard) => {
             keyboard.hidden = false;
@@ -215,6 +215,7 @@ class Keyboard {
     }
 
     hide() {
+        document.removeEventListener('keydown', this.handler);
         const keyboards = this.keyboards || document.querySelectorAll('.keyboard');
         keyboards.forEach((keyboard) => {
             const el = keyboard;
