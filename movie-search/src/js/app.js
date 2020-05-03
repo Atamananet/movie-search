@@ -115,17 +115,17 @@ const buttonKeyboard = document.querySelector('.form-search__keyboard');
 buttonKeyboard.addEventListener('click', (event) => {
     event.preventDefault(); // stop sending form
     const buttonSearch = document.querySelector('.form-search__button');
-    buttonSearch.focus(); // 
+    buttonSearch.focus(); // search by Enter button
     
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            event.preventDefault();
+            event.preventDefault(); // don't search by Space
         }
     }, true);
 
     document.addEventListener('mousedown', (event) => {
         if (event.target.id === 'Enter') {
-            buttonSearch.click();
+            buttonSearch.click(); // search by virtual Enter
         }
     }, true);
 
@@ -137,7 +137,7 @@ buttonKeyboard.addEventListener('click', (event) => {
     const isKeyboardShow = document.querySelector('.keyboard:not([hidden])');
 
     if (isKeyboardShow) {
-        input.disabled = false;
+        input.disabled = false; // disable double input (virtual & phisical)
         keyboard.hide();
         buttonSearch.blur();
         return;
