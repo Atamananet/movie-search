@@ -138,6 +138,7 @@ buttonKeyboard.addEventListener('click', (event) => {
 
     if (isKeyboardShow) {
         input.disabled = false; // disable double input (virtual & phisical)
+        input.focus();
         keyboard.hide();
         buttonSearch.blur();
         return;
@@ -147,3 +148,41 @@ buttonKeyboard.addEventListener('click', (event) => {
     keyboard.show();    
 });
 
+// Drag'n'Drop Virtual Keyboard
+document.addEventListener('mousedown', function(event) {
+    const currKeyboard = event.target.closest('.keyboard');
+    
+    if (!currKeyboard) { return; }
+
+    let shiftX = event.clientX - currKeyboard.getBoundingClientRect().left;
+    let shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
+  
+    currKeyboard.style.position = 'absolute';
+    currKeyboard.style.zIndex = 1000;
+    document.body.append(currKeyboard);
+  
+    moveAt(event.pageX, event.pageY);
+  
+    function moveAt(pageX, pageY) {
+        currKeyboard.style.left = pageX - shiftX + 'px';
+        currKeyboard.style.top = pageY - shiftY + 'px';
+    }
+  
+    function onMouseMove(event) {
+      moveAt(event.pageX, event.pageY);
+    }
+  
+    // передвигаем мяч при событии mousemove
+    document.addEventListener('mousemove', onMouseMove);
+  
+    // отпустить мяч, удалить ненужные обработчики
+    currKeyboard.onmouseup = function() {
+      document.removeEventListener('mousemove', onMouseMove);
+      currKeyboard.onmouseup = null;
+    };
+  
+  });
+  
+  document.ondragstart = function() {
+    return false;
+  };
