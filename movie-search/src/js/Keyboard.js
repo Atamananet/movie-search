@@ -183,7 +183,10 @@ class Keyboard {
         // hide all layouts
         engKeyboard.classList.add('english', 'hidden');
         ruKeyboard.classList.add('russian', 'hidden');
-        document.body.append(engKeyboard, ruKeyboard);
+        const container = document.createElement('DIV');
+        container.className = 'd-flex justify-content-center';
+        container.append(engKeyboard, ruKeyboard);
+        document.body.append(container);
 
         if (!localStorage.getItem('language')) {
             localStorage.setItem('language', 'english');

@@ -111,8 +111,23 @@ function alertWithMessage(message, type = 'danger') {
         .finally(() => button.innerHTML = 'Search');
 })();
 
-document.querySelector('.form-search__keyboard').addEventListener('click', (event) => {
-    event.preventDefault();
+const buttonKeyboard = document.querySelector('.form-search__keyboard');
+buttonKeyboard.addEventListener('click', (event) => {
+    event.preventDefault(); // stop sending form
+    const buttonSearch = document.querySelector('.form-search__button');
+    buttonSearch.focus(); // 
+    
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+            event.preventDefault();
+        }
+    }, true);
+
+    document.addEventListener('mousedown', (event) => {
+        if (event.target.id === 'Enter') {
+            buttonSearch.click();
+        }
+    }, true);
 
     if (!document.querySelector('.keyboard')) {
         keyboard.init();
@@ -124,6 +139,7 @@ document.querySelector('.form-search__keyboard').addEventListener('click', (even
     if (isKeyboardShow) {
         input.disabled = false;
         keyboard.hide();
+        buttonSearch.blur();
         return;
     }
 
