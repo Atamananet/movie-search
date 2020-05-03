@@ -1,6 +1,5 @@
 // import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import 'swiper/css/swiper.min.css';
 import '../css/main.css';
@@ -131,3 +130,4 @@ document.querySelector('.form-search__keyboard').addEventListener('click', (even
     input.disabled = true;
     keyboard.show();    
 });
+
