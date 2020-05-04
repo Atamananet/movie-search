@@ -1,18 +1,25 @@
-body {
-  background-color: aquamarine;
-}
+// colors
+$primary: #243441 !default;
+$primary-dark: #1d2831 !default;
+$secondary: #c7d4df !default;
+$accent: #0affef !default;
+$disabled: #ced4da !default;
+$shadow-1: #ffffff !default;
+$shadow-2: #000000 !default;
 
-html, body {
+html,
+body {
   position: relative;
   height: 100%;
 }
 
 body {
   min-height: 100vh;
-  background: #eee;
+  background: $primary;
+  background: radial-gradient(circle, $primary 0%, $primary-dark 100%);
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  color: #000;
+  color: $accent;
   margin: 0;
   padding: 0;
 }
@@ -25,6 +32,21 @@ body {
   right: 6vw;
 }
 
+.form-search__input {
+  background-color: $primary;
+  border: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 1px 4px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+}
+
+.form-search__button {
+  background-color: $primary;
+  color: $accent;
+  border: none;
+  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+}
 /* .swiper-container {
   margin-bottom: 100px;
 } */
@@ -57,7 +79,7 @@ body {
   height: 90%;
 }
 
-.swiper-slide__poster>img {
+.swiper-slide__poster > img {
   height: 100%;
   width: auto;
 }
@@ -72,6 +94,8 @@ body {
 
 .swiper-slide__title {
   height: 3rem;
+  color: $accent;
+  text-decoration: underline;
   display: flex;
   align-items: center;
   line-height: 0.9em;
@@ -121,7 +145,7 @@ body {
   margin-bottom: 0;
 }
 
-.swiper-pagination .swiper-pagination-bullet:nth-child(n+15) {
+.swiper-pagination .swiper-pagination-bullet:nth-child(n + 15) {
   display: none;
 }
 
@@ -169,12 +193,13 @@ footer .navbar-brand.github svg {
     max-height: 380px;
   }
 
-  .swiper-slide__poster>img {
+  .swiper-slide__poster > img {
     height: 100%;
     width: auto;
   }
 
-  .swiper-slide__year, .swiper-slide__rating {
+  .swiper-slide__year,
+  .swiper-slide__rating {
     width: 30vw;
     text-align: center;
   }
@@ -224,12 +249,13 @@ footer .navbar-brand.github svg {
     max-height: 380px;
   }
 
-  .swiper-slide__poster>img {
+  .swiper-slide__poster > img {
     height: 100%;
     width: auto;
   }
 
-  .swiper-slide__year, .swiper-slide__rating {
+  .swiper-slide__year,
+  .swiper-slide__rating {
     width: 30vw;
     text-align: center;
   }

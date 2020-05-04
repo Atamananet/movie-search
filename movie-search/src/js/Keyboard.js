@@ -1,4 +1,4 @@
-import '../css/keyboard.css';
+import '../style/keyboard.css';
 
 class Keyboard {
     constructor(params) {

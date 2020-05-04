@@ -2,7 +2,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import 'swiper/css/swiper.min.css';
-import '../css/main.css';
+import '../style/main.scss';
+import '../style/custom.scss';
 import mySwiper from './Swiper';
 import Slide from './Slide';
 import keyboard from './Keyboard';

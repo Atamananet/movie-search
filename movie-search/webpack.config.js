@@ -14,7 +14,7 @@ const config = {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
         ],
         exclude: /\.module\.css$/
       },
@@ -31,6 +31,14 @@ const config = {
           }
         ],
         include: /\.module\.css$/
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
       },
       {
         test: /\.png$/,
