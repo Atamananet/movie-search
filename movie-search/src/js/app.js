@@ -2,8 +2,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import 'swiper/css/swiper.min.css';
-import '../style/main.scss';
 import '../style/custom.scss';
+import '../style/main.scss';
 import mySwiper from './Swiper';
 import Slide from './Slide';
 import keyboard from './Keyboard';
@@ -52,8 +52,6 @@ async function appendFilms(data) {
         mySwiper.appendSlide(slideData.getElements());
     });
 }
-
-
 
 button.addEventListener('click', async (event) => {
     event.preventDefault(); // disable form sending and page reloading

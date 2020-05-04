@@ -2,15 +2,32 @@
 $primary: #243441 !default;
 $primary-dark: #1d2831 !default;
 $secondary: #c7d4df !default;
+$interface: #7c858d !default;
 $accent: #0affef !default;
 $disabled: #ced4da !default;
 $shadow-1: #ffffff !default;
 $shadow-2: #000000 !default;
+$rating: #19686d;
+// width
+$interface-height: calc(1.5em + 0.75rem + 2px);
+$keyboard-btn-width: 32px;
+$clear-btn-width: 23px;
+
+// fonts
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
+$font-h1: 700 24px/28px Roboto;
+$font-titles: 500 18px/21px Roboto;
+$font-year: 400 14px/16px Roboto;
 
 html,
 body {
   position: relative;
   height: 100%;
+}
+
+.navbar-brand {
+  font: $font-h1;
 }
 
 body {
@@ -26,18 +43,48 @@ body {
 
 .form-search__keyboard {
   position: relative;
-  width: 4vw;
-  min-width: 25px;
+  width: 32px;
+  height: 23px;
   margin: 0;
   padding: 0;
-  right: 6vw;
-  background: #243441;
+  right: $keyboard-btn-width + 8px;
+  background-color: inherit;
   box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.15);
   border-radius: 5px;
-  border:none;
+  border: none;
+
+  svg.fa-keyboard {
+    width: 22.86px;
+    height: 22.15px;
+    color: $interface;
+  }
+}
+
+.form-search__clear {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: $clear-btn-width;
+  height: 23px;
+  margin: 0;
+  padding: 0;
+  right: $keyboard-btn-width * 2 + $clear-btn-width + 16px;
+  background-color: inherit;
+  box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  border: none;
+
+  svg.fa-times {
+    width: 16px;
+    height: 16px;
+    color: $interface;
+  }
 }
 
 .form-search__input {
+  display: block;
+  width: 320px;
+  height: $interface-height;
   background-color: $primary;
   border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 1px 4px rgba(0, 0, 0, 0.5),
@@ -58,11 +105,16 @@ body {
 }
 
 .form-search__button {
+  width: 112px;
+  position: relative;
+  right: $clear-btn-width + $keyboard-btn-width - 16px;
+  height: $interface-height;
   background-color: $primary;
   color: $accent;
   border: none;
   box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.15);
   border-radius: 5px;
+  font: $font-titles;
 }
 /* .swiper-container {
   margin-bottom: 100px;
@@ -99,14 +151,35 @@ body {
 .swiper-slide__poster > img {
   height: 100%;
   width: auto;
+  float: left;
 }
 
 .swiper-slide__poster {
+  position: relative;
   height: 300px;
-  width: 100%;
+  max-width: 240px;
   overflow: hidden;
   display: flex;
   justify-content: center;
+
+  .swiper-slide__rating {
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 43px;
+    position: absolute;
+    right: 4px;
+    font: $font-year;
+    background-color: $rating;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+
+    span {
+      font: $font-year;
+      font-weight: 500;
+    }
+  
+  }
 }
 
 .swiper-slide__title {
@@ -115,7 +188,7 @@ body {
   text-decoration: underline;
   display: flex;
   align-items: center;
-  line-height: 0.9em;
+  font: $font-titles;
 }
 
 .swiper-slide__year {
@@ -123,24 +196,22 @@ body {
   display: flex;
   align-items: center;
   padding-top: 0.25rem;
+  font: $font-year;
+  color: $secondary;
 }
 
-.swiper-slide__rating {
+.swiper-slide__stars {
   height: 2rem;
   display: flex;
   align-items: center;
   padding-top: 0.25rem;
 }
 
-.fa-star.fass_full {
-  color: gold;
-}
-.fa-star-half-alt {
-  color: gold;
-}
-
+.fa-star.fass_full,
+.fa-star-half-alt,
 .fa-star.fass_pool {
-  color: rgb(238, 231, 192);
+  margin-left: 6px;
+  color: $secondary;
 }
 
 .spinner-border {
@@ -216,7 +287,7 @@ footer .navbar-brand.github svg {
   }
 
   .swiper-slide__year,
-  .swiper-slide__rating {
+  .swiper-slide__stars {
     width: 30vw;
     text-align: center;
   }
@@ -272,7 +343,7 @@ footer .navbar-brand.github svg {
   }
 
   .swiper-slide__year,
-  .swiper-slide__rating {
+  .swiper-slide__stars {
     width: 30vw;
     text-align: center;
   }
