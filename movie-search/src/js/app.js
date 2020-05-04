@@ -1,4 +1,5 @@
 // import 'bootstrap';
+import 'reset-css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import 'swiper/css/swiper.min.css';
@@ -146,6 +147,9 @@ buttonKeyboard.addEventListener('click', (event) => {
     input.disabled = true;
     keyboard.show();    
 });
+
+const buttonClear = document.querySelector('.form-search__clear');
+buttonClear.addEventListener('click', () => input.value = '');
 
 // Drag'n'Drop Virtual Keyboard
 document.addEventListener('mousedown', function(event) {

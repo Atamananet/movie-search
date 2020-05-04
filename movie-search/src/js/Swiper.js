@@ -1,7 +1,6 @@
 import Swiper from 'swiper';
 
 const mySwiper = new Swiper('.swiper-container', {
-    autoHeight: true,
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',

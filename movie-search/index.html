@@ -16,8 +16,8 @@
     </header>
 
     <div class="container">
-        <form class="form-inline mt-4 justify-content-left">
-            <input class="form-search__input" type="search" placeholder="" aria-label="Search" autofocus>
+        <form class="form-inline mt-4 justify-content-left " autocomplete="off">
+            <input class="form-search__input" placeholder="" aria-label="Search" autofocus>
             <button class="form-search__keyboard" type="button"><i class="fas fa-keyboard"></i></button>
             <button class="form-search__clear" type="button"><i class="fas fa-times"></i></button>
             <button class="form-search__button" type="submit"></button>
@@ -33,7 +33,7 @@
 
     </div>
 
-    <div class="container">
+    <div class="container position-relative">
         <!-- Slider main container -->
         <div class="swiper-container">
             <!-- Additional required wrapper -->
@@ -45,9 +45,11 @@
         </div>
         <!-- If we need navigation buttons -->
         <div class="swiper-button-prev">
-            
+            <i class="far fa-caret-square-left"></i>
         </div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-button-next">
+            <i class="far fa-caret-square-right"></i>
+        </div>
     </div>
 
     <!-- <footer class="fixed-bottom">
