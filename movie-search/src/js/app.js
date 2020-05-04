@@ -149,6 +149,13 @@ buttonKeyboard.addEventListener('click', (event) => {
 });
 
 const buttonClear = document.querySelector('.form-search__clear');
+input.addEventListener('input', (event) => {
+    if (input.value === '') {
+        buttonClear.style.zIndex = -1;
+    } else {
+        buttonClear.style.zIndex = 1;
+    }
+});
 buttonClear.addEventListener('click', () => input.value = '');
 
 // Drag'n'Drop Virtual Keyboard

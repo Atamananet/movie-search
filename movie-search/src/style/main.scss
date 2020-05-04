@@ -63,6 +63,7 @@ body {
 
 .form-search__clear {
   position: relative;
+  z-index: -1;
   display: flex;
   justify-content: center;
   width: $clear-btn-width;
@@ -100,8 +101,17 @@ body {
   color: $secondary;
 }
 
+.form-search__input::placeholder {
+  color: $interface;
+}
+
+.form-search__input:focus::placeholder {
+  opacity: 0;
+}
+
 .form-search__input:focus {
   background-color: $primary;
+  padding-left: 1rem;
   background-image: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 1px 4px rgba(0, 0, 0, 0.5),
     inset -2px -2px 4px rgba(255, 255, 255, 0.15);
