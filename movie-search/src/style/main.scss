@@ -4,7 +4,7 @@ $primary-dark: #1d2831 !default;
 $secondary: #c7d4df !default;
 $interface: #7c858d !default;
 $visited: #c7d4df;
-$accent: #0affef !default; 
+$accent: #0affef !default;
 $disabled: #ced4da !default;
 $shadow-1: #ffffff !default;
 $shadow-2: #000000 !default;
@@ -83,6 +83,13 @@ body {
   }
 }
 
+.form-search__clear:hover,
+.form-search__keyboard:hover {
+  svg {
+    color: $accent;
+  }
+}
+
 .form-search__input {
   display: block;
   width: 320px;
@@ -95,7 +102,7 @@ body {
   background-image: url(../img/search.svg);
   background-repeat: no-repeat;
   background-position-x: 0.75rem;
-  background-position-y: calc(0.25em + 0.25rem + 1px);
+  background-position-y: calc(0.25em + 0.25rem + 4px);
   background-size: calc(1em + 0.25rem);
   border-radius: 5px;
   color: $secondary;
@@ -111,11 +118,11 @@ body {
 
 .form-search__input:focus {
   background-color: $primary;
-  padding-left: 1rem;
-  background-image: none;
+  padding-left: 2.5rem;
+  background-size: 0;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 2px 1px 4px rgba(0, 0, 0, 0.5),
     inset -2px -2px 4px rgba(255, 255, 255, 0.15);
-    outline: none;
+  outline: none;
 }
 
 .form-search__button {
@@ -174,7 +181,6 @@ body {
 }
 
 .swiper-button-prev {
-  
   left: -33px - 64px; // 33 + button-width
   right: auto;
 }
@@ -241,8 +247,8 @@ button:focus {
 
 .swiper-slide__poster {
   position: relative;
-  height: 300px;
-  max-width: 240px;
+  height: 230px;
+  max-width: 170px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -272,8 +278,9 @@ button:focus {
   color: $accent;
   text-decoration: underline;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   font: $font-titles;
+  padding-bottom: 0.5rem;
 }
 
 .swiper-slide__year {
@@ -329,7 +336,7 @@ button:focus {
 
 footer {
   background-color: $primary-dark;
-  
+
   .github,
   .rolling-scopes {
     font: 500 12px/14px Roboto;
@@ -339,11 +346,39 @@ footer {
   }
 }
 
-@media (min-width: 320px) and (max-width: 567px) {
+@media (max-width: 374px) {
   html {
     font-size: 12px;
   }
 
+  header nav {
+    height: 48px;
+    margin-bottom: 24px;
+  }
+
+  .form-inline.mt-4 {
+    margin-top: 0 !important;
+    height: 40px;
+  }
+
+  .form-search__input {
+    width: 100%;
+    background-position-x: calc(100% - 0.75rem);
+    transition: background-size 0.15s;
+    transition-delay: 0.1s;
+  }
+
+  .form-search__button,
+  .form-search__keyboard {
+    display: none;
+  }
+
+  .form-search__clear {
+    position: relative;
+    bottom: 31px;
+    left: calc(100% - 23px - 0.75rem);
+  }
+
   .container__alert {
     min-height: 25px;
   }
@@ -354,14 +389,11 @@ footer {
   }
 
   .swiper-slide__poster {
-    height: 280px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    height: 224px;
   }
 
   .swiper-wrapper {
-    padding-bottom: 86px;
+    padding-bottom: 50px;
   }
 
   .swiper-slide {
@@ -369,14 +401,8 @@ footer {
   }
 
   .swiper-slide__title {
-    width: 80vw;
+    width: 100%;
     justify-content: center;
-  }
-
-  .swiper-slide__poster {
-    width: 80vw;
-    height: 60vh;
-    max-height: 380px;
   }
 
   .swiper-slide__poster > img {
@@ -386,18 +412,52 @@ footer {
 
   .swiper-slide__year,
   .swiper-slide__stars {
-    width: 30vw;
-    text-align: center;
+    width: 100%;
+    margin-top: 6px;
+    justify-content: center;
   }
 
-  .navbar .rolling-scopes {
+  .swiper-pagination .swiper-pagination-bullet:nth-child(n + 9) {
+    display: none;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
     display: none;
   }
 }
 
-@media (min-width: 567px) and (max-width: 767px) {
+@media (min-width: 375px) and (max-width: 767px) {
   html {
     font-size: 14px;
+  }
+
+  header nav {
+    height: 48px;
+    margin-bottom: 24px;
+  }
+
+  .form-inline.mt-4 {
+    margin-top: 0 !important;
+    height: 40px;
+  }
+
+  .form-search__input {
+    width: 100%;
+    background-position-x: calc(100% - 0.75rem);
+    transition: background-size 0.15s;
+    transition-delay: 0.1s;
+  }
+
+  .form-search__button,
+  .form-search__keyboard {
+    display: none;
+  }
+
+  .form-search__clear {
+    position: relative;
+    bottom: 31px;
+    left: calc(100% - 23px - 0.75rem);
   }
 
   .container__alert {
@@ -411,28 +471,11 @@ footer {
 
   .swiper-slide__poster {
     height: 280px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .swiper-wrapper {
-    padding-bottom: 30px;
-  }
-
-  .swiper-slide {
-    flex-direction: row;
   }
 
   .swiper-slide__title {
-    width: 80vw;
+    width: 100%;
     justify-content: center;
-  }
-
-  .swiper-slide__poster {
-    width: 80vw;
-    height: 60vh;
-    max-height: 380px;
   }
 
   .swiper-slide__poster > img {
@@ -442,11 +485,57 @@ footer {
 
   .swiper-slide__year,
   .swiper-slide__stars {
-    width: 30vw;
-    text-align: center;
+    width: 100%;
+    margin-top: 6px;
+    justify-content: center;
   }
 
-  .navbar .rolling-scopes {
+  .swiper-pagination .swiper-pagination-bullet:nth-child(n + 12) {
+    display: none;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+}
+
+@media (min-width: 560px) and (max-width: 767px) {
+  .container.position-relative {
+    max-width: 510px;
+  }
+  .swiper-slide__poster {
+    height: 320px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  html {
+    font-size: 16px;
+  }
+
+  .swiper-slide__poster {
+    height: 220px;
+  }
+
+  .swiper-slide__title {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .swiper-slide__poster > img {
+    height: 100%;
+    width: auto;
+  }
+
+  .swiper-slide__year,
+  .swiper-slide__stars {
+    width: 100%;
+    margin-top: 6px;
+    justify-content: center;
+  }
+
+  .swiper-pagination .swiper-pagination-bullet:nth-child(n + 12) {
     display: none;
   }
 }

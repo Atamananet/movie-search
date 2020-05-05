@@ -99,7 +99,7 @@ function alertWithMessage(message, type = 'danger') {
 
 // for start page
 (async () => {
-    let films = await getFilmsByTitle('interstellar')
+    let films = await getFilmsByTitle('RED')
         .catch((error) => {
             if (error.message = 'Not found') {
                 alertWithMessage(error.message);
@@ -156,7 +156,24 @@ input.addEventListener('input', (event) => {
         buttonClear.style.zIndex = 1;
     }
 });
-buttonClear.addEventListener('click', () => input.value = '');
+
+
+// clear-input button click event
+document.addEventListener('click', (event) => {
+    // clear input on click
+    if (event.target.closest('.form-search__clear')){
+        input.value = '';
+        buttonClear.style.zIndex = -1;
+    }
+    // hide button if click not in input
+    if (!event.target.closest('.form-search__input')) {
+        buttonClear.style.zIndex = -1;
+    } else { // if click in input
+        if (input.value){ // show if input not empty
+            buttonClear.style.zIndex = 1;
+        }
+    }
+});
 
 // Drag'n'Drop Virtual Keyboard
 document.addEventListener('mousedown', function(event) {
@@ -182,10 +199,8 @@ document.addEventListener('mousedown', function(event) {
       moveAt(event.pageX, event.pageY);
     }
   
-    // передвигаем мяч при событии mousemove
     document.addEventListener('mousemove', onMouseMove);
-  
-    // отпустить мяч, удалить ненужные обработчики
+
     currKeyboard.onmouseup = function() {
       document.removeEventListener('mousemove', onMouseMove);
       currKeyboard.onmouseup = null;
