@@ -34,7 +34,7 @@ mySwiper.on('reachEnd', async function loadNextPage() {
 });
 
 async function getFilmsByTitle(title, page = 1) {
-    let response = await fetch(`http://www.omdbapi.com/?s=${title}&apikey=${apiKey}&i&plot=full&page=${page}`);
+    let response = await fetch(`https://www.omdbapi.com/?s=${title}&apikey=${apiKey}&i&plot=full&page=${page}`);
     let data = await response.json();
 
     if (data.Response === 'False') { //
