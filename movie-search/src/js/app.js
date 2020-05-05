@@ -13,8 +13,7 @@ const imdbKey = '1d7bd802'; // private key
 const yandexKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ade7fcb685ee1a79adfe22b16';
 const input = document.querySelector('.form-search__input');
 const button = document.querySelector('.form-search__button');
-let searchPage = 0; // search page param
-
+let searchPage = 0; // search page IMDbAPI param
 
 // load next 10 films when slides end
 mySwiper.on('reachEnd', async function loadNextPage() {
@@ -34,17 +33,19 @@ async function getFilmsByTitle(title, page = 1) {
     let data = await response.json();
 
     if (data.Response === 'False') { //
-        throw Error('Not found');
+        throw Error(`Not found for "${title}"`);
     }
     return data;
 }
 
 async function appendFilms(data) {
     // push search results into swiper 
-    data.Search.forEach((film) => {
+    data.Search.forEach(async (film) => {
         const swiperSlide = document.createElement('DIV');
         swiperSlide.className = 'swiper-slide';
         const slideData = new Slide(film);
+        // add youtube trailer
+        // document.getElementById('player').append(await slideData.getTrailerIframe());
         mySwiper.appendSlide(slideData.getElements());
     });
 }
@@ -70,11 +71,10 @@ button.addEventListener('click', async (event) => {
     // get data with IMDb API
     let films = await getFilmsByTitle(input.value)
         .catch((error) => {
-            if (error.message = 'Not found') {
+            if (error.message) {
                 alertWithMessage(error.message);
                 button.innerHTML = 'Search';
             }
-            console.error('URLRequestError:' + error.message);
         });
 
     if (!films) { return; }

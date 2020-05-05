@@ -331,6 +331,11 @@ button:focus {
   margin-bottom: 0;
 }
 
+.alert.alert-danger {
+  color: $accent;
+}
+
+
 .swiper-pagination .swiper-pagination-bullet:nth-child(n + 15) {
   display: none;
 }
