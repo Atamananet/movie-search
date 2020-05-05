@@ -271,4 +271,40 @@ buttonKeyboard.addEventListener('click', (event) => {
     keyboard.show();
 });
 
+
+
+// Drag'n'Drop Virtual Keyboard
+document.addEventListener('mousedown', function (event) {
+    const currKeyboard = event.target.closest('.keyboard');
+
+    if (!currKeyboard) { return; }
+
+    let shiftX = event.clientX - currKeyboard.getBoundingClientRect().left;
+    let shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
+
+    currKeyboard.style.position = 'absolute';
+    currKeyboard.style.zIndex = 1000;
+    document.body.append(currKeyboard);
+
+    moveAt(event.pageX, event.pageY);
+
+    function moveAt(pageX, pageY) {
+        currKeyboard.style.left = pageX - shiftX + 'px';
+        currKeyboard.style.top = pageY - shiftY + 'px';
+    }
+
+    function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    currKeyboard.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        currKeyboard.onmouseup = null;
+    };
+});
+
+document.ondragstart = () => false;
+
 export default keyboard;

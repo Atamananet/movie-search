@@ -7,7 +7,7 @@ import '../style/custom.scss';
 import '../style/main.scss';
 import mySwiper from './Swiper';
 import Slide from './Slide';
-import keyboard from './Keyboard';
+import './Keyboard';
 
 const imdbKey = '1d7bd802'; // private key 
 const yandexKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ade7fcb685ee1a79adfe22b16';
@@ -40,7 +40,6 @@ async function getFilmsByTitle(title, page = 1) {
 }
 
 async function appendFilms(data) {
-    if (!data) { return; }
     // push search results into swiper 
     data.Search.forEach((film) => {
         const swiperSlide = document.createElement('DIV');
@@ -100,7 +99,7 @@ function alertWithMessage(message, type = 'danger') {
             if (error.message = 'Not found') {
                 alertWithMessage(error.message);
             }
-            console.error('URLRequestError:' + error.message);
+            //console.error('URLRequestError:' + error.message);
         });
 
     appendFilms(films)
@@ -108,10 +107,11 @@ function alertWithMessage(message, type = 'danger') {
 })();
 
 const buttonClear = document.querySelector('.form-search__clear');
-buttonClear.hide = function() { this.style.zIndex = -1; }
-buttonClear.show = function() { this.style.zIndex = 1; }
+buttonClear.hide = function () { this.style.zIndex = -1; }
+buttonClear.show = function () { this.style.zIndex = 1; }
 
-input.addEventListener('input', (event) => {
+// clear button show/hide
+input.addEventListener('input', () => {
     if (input.value === '') {
         buttonClear.hide();
     } else {
@@ -122,7 +122,7 @@ input.addEventListener('input', (event) => {
 // clear-input button click event
 document.addEventListener('click', (event) => {
     // clear input on click
-    if (event.target.closest('.form-search__clear')){
+    if (event.target.closest('.form-search__clear')) {
         input.value = '';
         buttonClear.hide();
     }
@@ -130,42 +130,8 @@ document.addEventListener('click', (event) => {
     if (!event.target.closest('.form-search__input')) {
         buttonClear.hide();
     } else { // if click in input
-        if (input.value){ // show if input not empty
+        if (input.value) { // show if input not empty
             buttonClear.show();
         }
     }
 });
-
-// Drag'n'Drop Virtual Keyboard
-document.addEventListener('mousedown', function(event) {
-    const currKeyboard = event.target.closest('.keyboard');
-    
-    if (!currKeyboard) { return; }
-
-    let shiftX = event.clientX - currKeyboard.getBoundingClientRect().left;
-    let shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
-  
-    currKeyboard.style.position = 'absolute';
-    currKeyboard.style.zIndex = 1000;
-    document.body.append(currKeyboard);
-  
-    moveAt(event.pageX, event.pageY);
-  
-    function moveAt(pageX, pageY) {
-        currKeyboard.style.left = pageX - shiftX + 'px';
-        currKeyboard.style.top = pageY - shiftY + 'px';
-    }
-  
-    function onMouseMove(event) {
-      moveAt(event.pageX, event.pageY);
-    }
-  
-    document.addEventListener('mousemove', onMouseMove);
-
-    currKeyboard.onmouseup = function() {
-      document.removeEventListener('mousemove', onMouseMove);
-      currKeyboard.onmouseup = null;
-    };
-  });
-  
-  document.ondragstart = () => false;
