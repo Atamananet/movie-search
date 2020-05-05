@@ -323,7 +323,8 @@ button:focus {
   font: $font-titles;
 }
 
-.alert.alert-danger {
+.alert.alert-danger,
+.alert.alert-primary {
   background-color: initial;
   border: none;
   color: $visited;
@@ -389,11 +390,12 @@ footer {
   }
 
   .swiper-slide__poster {
-    height: 224px;
+    height: 300px;
+    max-width: initial;
   }
 
   .swiper-wrapper {
-    padding-bottom: 50px;
+    padding-bottom: 0px;
   }
 
   .swiper-slide {
@@ -410,14 +412,17 @@ footer {
     width: auto;
   }
 
-  .swiper-slide__year,
-  .swiper-slide__stars {
+  .swiper-slide__year {
     width: 100%;
     margin-top: 6px;
     justify-content: center;
   }
 
-  .swiper-pagination .swiper-pagination-bullet:nth-child(n + 9) {
+  .swiper-slide__stars {
+    display: none;
+  }
+
+  .swiper-pagination {
     display: none;
   }
 
@@ -469,18 +474,24 @@ footer {
     height: 25px;
   }
 
-  .swiper-slide__poster {
-    height: 280px;
+  .swiper-wrapper {
+    padding-bottom: 0px;
   }
 
-  .swiper-slide__title {
-    width: 100%;
-    justify-content: center;
+  .swiper-slide__poster {
+    max-width: 270px;
+    height: 330px;
   }
 
   .swiper-slide__poster > img {
     height: 100%;
     width: auto;
+    max-width: initial;
+  }
+
+  .swiper-slide__title {
+    width: 100%;
+    justify-content: center;
   }
 
   .swiper-slide__year,
@@ -490,7 +501,7 @@ footer {
     justify-content: center;
   }
 
-  .swiper-pagination .swiper-pagination-bullet:nth-child(n + 12) {
+  .swiper-pagination{
     display: none;
   }
 
@@ -504,6 +515,7 @@ footer {
   .container.position-relative {
     max-width: 510px;
   }
+  
   .swiper-slide__poster {
     height: 320px;
   }
@@ -533,9 +545,5 @@ footer {
     width: 100%;
     margin-top: 6px;
     justify-content: center;
-  }
-
-  .swiper-pagination .swiper-pagination-bullet:nth-child(n + 12) {
-    display: none;
   }
 }

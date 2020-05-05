@@ -232,4 +232,43 @@ const keyboard = new Keyboard({
     switchLanguageKeys: ['Shift', 'CTRL'],
 });
 
+const buttonKeyboard = document.querySelector('.form-search__keyboard');
+const input = document.querySelector('.form-search__input');
+
+buttonKeyboard.addEventListener('click', (event) => {
+    event.preventDefault(); // stop sending form
+    const buttonSearch = document.querySelector('.form-search__button');
+    buttonSearch.focus(); // search by Enter button
+
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+            event.preventDefault(); // don't search by Space
+        }
+    }, true);
+
+    document.addEventListener('mousedown', (event) => {
+        if (event.target.id === 'Enter') {
+            buttonSearch.click(); // search by virtual Enter
+        }
+    }, true);
+
+    if (!document.querySelector('.keyboard')) {
+        keyboard.init();
+        return;
+    }
+
+    const isKeyboardShow = document.querySelector('.keyboard:not([hidden])');
+
+    if (isKeyboardShow) {
+        input.disabled = false; // disable double input (virtual & phisical)
+        input.focus();
+        keyboard.hide();
+        buttonSearch.blur();
+        return;
+    }
+
+    input.disabled = true;
+    keyboard.show();
+});
+
 export default keyboard;

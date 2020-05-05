@@ -9,11 +9,10 @@ import mySwiper from './Swiper';
 import Slide from './Slide';
 import keyboard from './Keyboard';
 
-const apiKey = '1d7bd802'; // private key 
-const yandexApiKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ade7fcb685ee1a79adfe22b16';
+const imdbKey = '1d7bd802'; // private key 
+const yandexKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ade7fcb685ee1a79adfe22b16';
 const input = document.querySelector('.form-search__input');
 const button = document.querySelector('.form-search__button');
-const swiperWrapper = document.querySelector('.swiper-wrapper');
 let searchPage = 0; // search page param
 
 
@@ -21,10 +20,7 @@ let searchPage = 0; // search page param
 mySwiper.on('reachEnd', async function loadNextPage() {
     if (mySwiper.isEnd && mySwiper.activeIndex > 4) {
         searchPage += 1;
-        if (mySwiper.pagination.bullets.length > 20) {
-            mySwiper.pagination.bullets.length = 20;
-        }
-        button.innerHTML = '<div class="spinner-border" role="status"></div>';
+        utton.innerHTML = '<div class="spinner-border" role="status"></div>';
         const films = await getFilmsByTitle(input.value, searchPage)
             .catch((error) => console.log(error));
 
@@ -34,7 +30,7 @@ mySwiper.on('reachEnd', async function loadNextPage() {
 });
 
 async function getFilmsByTitle(title, page = 1) {
-    let response = await fetch(`https://www.omdbapi.com/?s=${title}&apikey=${apiKey}&i&plot=full&page=${page}`);
+    let response = await fetch(`https://www.omdbapi.com/?s=${title}&apikey=${imdbKey}&i&plot=full&page=${page}`);
     let data = await response.json();
 
     if (data.Response === 'False') { //
@@ -60,12 +56,12 @@ button.addEventListener('click', async (event) => {
     button.innerHTML = '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>Search';
 
     // use Yandex Translate API to detect language
-    const responseLanguage = await fetch(`https://translate.yandex.net/api/v1.5/tr.json/detect?key=${yandexApiKey}&text=${input.value}&hint=ru,en`);
+    const responseLanguage = await fetch(`https://translate.yandex.net/api/v1.5/tr.json/detect?key=${yandexKey}&text=${input.value}&hint=ru,en`);
     const json = await responseLanguage.json();
 
     // use Yandex Translate API to translate search request
     if (json.code === 200 && json.lang === 'ru') {
-        const responseTranslate = await fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexApiKey}&text=${input.value}&lang=en`);
+        const responseTranslate = await fetch(`https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexKey}&text=${input.value}&lang=en`);
         const translation = await responseTranslate.json();
         const message = `Showing results for ${translation.text[0]}`;
         alertWithMessage(message, 'primary');
@@ -111,66 +107,31 @@ function alertWithMessage(message, type = 'danger') {
         .finally(() => button.innerHTML = 'Search');
 })();
 
-const buttonKeyboard = document.querySelector('.form-search__keyboard');
-buttonKeyboard.addEventListener('click', (event) => {
-    event.preventDefault(); // stop sending form
-    const buttonSearch = document.querySelector('.form-search__button');
-    buttonSearch.focus(); // search by Enter button
-    
-    document.addEventListener('keydown', (event) => {
-        if (event.code === 'Space') {
-            event.preventDefault(); // don't search by Space
-        }
-    }, true);
-
-    document.addEventListener('mousedown', (event) => {
-        if (event.target.id === 'Enter') {
-            buttonSearch.click(); // search by virtual Enter
-        }
-    }, true);
-
-    if (!document.querySelector('.keyboard')) {
-        keyboard.init();
-        return;
-    }
-
-    const isKeyboardShow = document.querySelector('.keyboard:not([hidden])');
-
-    if (isKeyboardShow) {
-        input.disabled = false; // disable double input (virtual & phisical)
-        input.focus();
-        keyboard.hide();
-        buttonSearch.blur();
-        return;
-    }
-
-    input.disabled = true;
-    keyboard.show();    
-});
-
 const buttonClear = document.querySelector('.form-search__clear');
+buttonClear.hide = function() { this.style.zIndex = -1; }
+buttonClear.show = function() { this.style.zIndex = 1; }
+
 input.addEventListener('input', (event) => {
     if (input.value === '') {
-        buttonClear.style.zIndex = -1;
+        buttonClear.hide();
     } else {
-        buttonClear.style.zIndex = 1;
+        buttonClear.show();
     }
 });
-
 
 // clear-input button click event
 document.addEventListener('click', (event) => {
     // clear input on click
     if (event.target.closest('.form-search__clear')){
         input.value = '';
-        buttonClear.style.zIndex = -1;
+        buttonClear.hide();
     }
     // hide button if click not in input
     if (!event.target.closest('.form-search__input')) {
-        buttonClear.style.zIndex = -1;
+        buttonClear.hide();
     } else { // if click in input
         if (input.value){ // show if input not empty
-            buttonClear.style.zIndex = 1;
+            buttonClear.show();
         }
     }
 });
@@ -205,9 +166,6 @@ document.addEventListener('mousedown', function(event) {
       document.removeEventListener('mousemove', onMouseMove);
       currKeyboard.onmouseup = null;
     };
-  
   });
   
-  document.ondragstart = function() {
-    return false;
-  };
+  document.ondragstart = () => false;
