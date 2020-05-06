@@ -1,6 +1,13 @@
 import '../style/keyboard.scss';
 
 function toggleHidden(element) { element.classList.toggle('hidden'); }
+function mouseupHandler(event) {
+  if (event.target.tagName !== 'SPAN') { return; }
+  if (!event.target.classList.contains('command')) { // commands butons still pressed
+    event.target.classList.toggle('pressed');
+  }
+}
+
 class Keyboard {
   constructor(params) {
     this.ENGLISH = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', 'Backspace', '',
@@ -14,6 +21,10 @@ class Keyboard {
       'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '',
       'Shift', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', 'Enter', '',
       'Control', 'Alt', 'Meta', 'Space'];
+
+
+    this.alphabet = 'qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('');
+    this.controls = ['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'];
 
     this.btnCombination = [];
     params.switchLanguageKeys.forEach((key) => {
@@ -56,12 +67,11 @@ class Keyboard {
   // return string with type of button
   keyType(button) {
     const currBtn = button.toString();
-    const alphabet = 'qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('');
-    const controls = ['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'];
+
 
     if (currBtn === '') { return 'new line'; }
-    if (controls.includes(currBtn)) { return 'command'; }
-    if (alphabet.includes(currBtn.toLowerCase())) { return 'letter'; }
+    if (this.controls.includes(currBtn)) { return 'command'; }
+    if (this.alphabet.includes(currBtn.toLowerCase())) { return 'letter'; }
 
     return 'simbol';
   }
@@ -163,13 +173,6 @@ class Keyboard {
     this.print(event.target.id); // add to textarea
   }
 
-  mouseupHandler(event) {
-    if (event.target.tagName !== 'SPAN') { return; }
-    if (!event.target.classList.contains('command')) { // commands butons still pressed
-      event.target.classList.toggle('pressed');
-    }
-  }
-
   init() {
     // create markup and set keyboard layout //
     const engKeyboard = this.createKeyboard(this.ENGLISH);
@@ -199,14 +202,15 @@ class Keyboard {
     document.addEventListener('keydown', this.langChangeHandler.bind(this));
     // mouse events listeners
     document.addEventListener('mousedown', this.mousedownHandler.bind(this));
-    document.addEventListener('mouseup', this.mouseupHandler.bind(this));
+    document.addEventListener('mouseup', mouseupHandler.bind(this));
   }
 
   show() {
     document.removeEventListener('keydown', this.handler);
     document.addEventListener('keydown', this.handler);
     const keyboards = this.keyboards || document.querySelectorAll('.keyboard');
-    keyboards.forEach((keyboard) => {
+    keyboards.forEach((item) => {
+      const keyboard = item;
       keyboard.hidden = false;
     });
   }
@@ -292,7 +296,7 @@ document.addEventListener('mousedown', (event) => {
 
   document.addEventListener('mousemove', onMouseMove);
 
-  currKeyboard.onmouseup = function () {
+  currKeyboard.onmouseup = function mouseDropHandler() {
     document.removeEventListener('mousemove', onMouseMove);
     currKeyboard.onmouseup = null;
   };

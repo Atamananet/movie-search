@@ -4,7 +4,7 @@
   "description": "movie-search rss task",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "test": "eslint src/js/*.js --fix",
     "start": "webpack-dev-server --open",
     "build": "webpack",
     "watch": "webpack --watch"

@@ -14,6 +14,14 @@ const button = document.querySelector('.form-search__button');
 let searchPage = 0; // search page IMDbAPI param
 const slidesArray = [];
 
+// show alert message below search
+function alertWithMessage(message, type = 'danger') {
+  const alert = document.querySelector(`.container__alert .alert-${type}`);
+  alert.hidden = false;
+  alert.innerText = message;
+  setTimeout(() => { alert.hidden = true; }, 3000);
+}
+
 async function getFilmsByTitle(title, page = 1) {
   const url = `https://www.omdbapi.com/?s=${title}&apikey=${imdbKey}&i&plot=full&page=${page}`;
   const response = await fetch(url);
@@ -49,14 +57,6 @@ async function getTrailer(slideIndex) {
   player.append(trailer);
 }
 
-// show alert message below search
-function alertWithMessage(message, type = 'danger') {
-  const alert = document.querySelector(`.container__alert .alert-${type}`);
-  alert.hidden = false;
-  alert.innerText = message;
-  setTimeout(() => { alert.hidden = true; }, 3000);
-}
-
 async function searchHandler(event) {
   event.preventDefault(); // disable form sending and page reloading
 
@@ -70,7 +70,6 @@ async function searchHandler(event) {
     const responseLanguage = await fetch(urlDetect);
     const json = await responseLanguage.json();
     // use Yandex Translate API to translate search request
-    debugger;
     if (json.code === 200 && json.lang === 'ru') {
       const urlTranslate = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexKey}&text=${input.value}&lang=en`;
       const responseTranslate = await fetch(urlTranslate);
@@ -78,7 +77,6 @@ async function searchHandler(event) {
       const message = `Showing results for ${translation.text[0]}`;
       alertWithMessage(message, 'primary');
       [input.value] = translation.text;
-      debugger;
     }
   } catch (e) {
     alertWithMessage(e);
@@ -126,7 +124,6 @@ button.addEventListener('click', searchHandler);
       if (error.message === 'Not found') {
         alertWithMessage(error.message);
       }
-      // console.error('URLRequestError:' + error.message);
     });
 
   appendFilms(films)
@@ -134,8 +131,8 @@ button.addEventListener('click', searchHandler);
 })();
 
 const buttonClear = document.querySelector('.form-search__clear');
-buttonClear.hide = function () { this.style.zIndex = -1; };
-buttonClear.show = function () { this.style.zIndex = 1; };
+buttonClear.hide = function hide() { this.style.zIndex = -1; };
+buttonClear.show = function show() { this.style.zIndex = 1; };
 
 // clear button show/hide
 input.addEventListener('input', () => {
@@ -153,11 +150,13 @@ document.addEventListener('click', (event) => {
     input.value = '';
     buttonClear.hide();
   }
+
   // hide button if click not in input
   if (!event.target.closest('.form-search__input')) {
     buttonClear.hide();
     return;
   }
+
   // if click in input
   if (input.value) { // show if input not empty
     buttonClear.show();

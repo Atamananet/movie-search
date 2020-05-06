@@ -56,7 +56,7 @@ class Slide {
   }
 
   async getTrailerIframe() {
-    if (!this.title) { return; }
+    if (!this.title) { return null; }
 
     const youtubeID = await movieTrailer(this.title, { id: true });
     const iframe = document.createElement('IFRAME');
