@@ -60,20 +60,17 @@ function alertWithMessage(message, type = 'danger') {
 async function searchHandler(event) {
   event.preventDefault(); // disable form sending and page reloading
 
-  if (!input.value) {
-    //  throw new Error('Empty request');
-  }
-
   button.innerHTML = '<div class="spinner-border" role="status"><span class="sr-only"></span></div>';
   // use Yandex Translate API to detect language
   try {
     if (!input.value) {
       throw Error('Yandex API error: empty request');
     }
-    const urlDetect = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexKey}&text=${input.value}&lang=en`;
+    const urlDetect = `https://translate.yandex.net/api/v1.5/tr.json/detect?key=${yandexKey}&text=${input.value}&hint=ru,en`;
     const responseLanguage = await fetch(urlDetect);
     const json = await responseLanguage.json();
     // use Yandex Translate API to translate search request
+    debugger;
     if (json.code === 200 && json.lang === 'ru') {
       const urlTranslate = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexKey}&text=${input.value}&lang=en`;
       const responseTranslate = await fetch(urlTranslate);
@@ -81,6 +78,7 @@ async function searchHandler(event) {
       const message = `Showing results for ${translation.text[0]}`;
       alertWithMessage(message, 'primary');
       [input.value] = translation.text;
+      debugger;
     }
   } catch (e) {
     alertWithMessage(e);
