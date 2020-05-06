@@ -14,7 +14,11 @@
             <h1 class="navbar-brand">Movie Search</h1>
         </nav>
     </header>
-    <div id="player"></div>
+    
+    <div class="container player-container d-flex h-100 fixed-top align-items-center " hidden>
+        <div id="player"></div>
+    </div>
+
     <div class="container">
         <form class="form-inline mt-4 justify-content-left " autocomplete="off">
             <input class="form-search__input" placeholder="Search" aria-label="Search" maxlength="24" autofocus>
@@ -33,17 +37,13 @@
 
     </div>
 
-    <div class="container position-relative">
-        <!-- Slider main container -->
+    <div class="container swiper-controls-container position-relative">
         <div class="swiper-container">
-            <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
             </div>
-            <!-- If we need pagination -->
             <div class="swiper-pagination"></div>
         </div>
-        <!-- If we need navigation buttons -->
         <div class="swiper-button-prev">
             <i class="far fa-caret-square-left"></i>
         </div>
@@ -56,7 +56,8 @@
         <div class="container">
             <nav class="navbar navbar-dark justify-content-between">
                 <span class="navbar-brand rolling-scopes">RollingScopeSchool</span>
-                <a class="navbar-brand github" href="https://github.com/Atamananet"><i class="fab fa-github"></i>GitHub</a>
+                <a class="navbar-brand github" href="https://github.com/Atamananet"><i
+                        class="fab fa-github"></i>GitHub</a>
             </nav>
         </div>
     </footer>

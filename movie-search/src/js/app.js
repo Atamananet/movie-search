@@ -149,13 +149,17 @@ document.addEventListener('click', (event) => {
 
 // getTrailer handler
 document.addEventListener('click', (event) => {
-    const player = document.getElementById('player');
+    const player = document.querySelector('#player');
+    const playerContainer = document.querySelector('.player-container');
+    const swiperContainer = document.querySelector('.swiper-controls-container');
     if (event.target.closest('.swiper-slide__poster')) {
-        player.style.display = 'flex';
+        playerContainer.hidden = false;
+        swiperContainer.style.opacity = 0;
         getTrailer(mySwiper.clickedIndex);
         return;
     } else {
         player.innerHTML = '';
-        player.style.display = 'none';
+        playerContainer.hidden = true;
+        swiperContainer.style.opacity = 1;
     }
 });

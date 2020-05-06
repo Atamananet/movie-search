@@ -52,7 +52,7 @@ class Slide {
         }
     }
 
-    async getTrailerIframe(width = 640, height = 480) {
+    async getTrailerIframe() {
         if (!this.title) { return; }
 
         const youtubeID = await movieTrailer(this.title, { id: true });
@@ -61,11 +61,12 @@ class Slide {
         
         const iframe = document.createElement('IFRAME');
         iframe.src = `https://www.youtube.com/embed/${youtubeID}`;
-        iframe.width = width;
-        iframe.height = height;
+        // iframe.width = width;
+        // iframe.height = height;
         iframe.frameborder = 0;
         iframe.encryptedMedia = true;
         iframe.allowfullscreen = true;
+        iframe.className = 'youtube-video';
         // debugger;
         return iframe;
     }
