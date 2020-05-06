@@ -1,27 +1,5 @@
-/* body {
-    padding-top: 100px;
-    background-color: #f7f5f5;
-    width: 1008px;
-    margin: auto;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    font-family: Arial, Helvetica, sans-serif;
-} */
-
-/* textarea {
-    position: absolute;
-    bottom: 300px;
-    width: 1006px;
-    box-sizing: border-box;
-    height: 120px;
-    margin: auto;
-    font-size: 18px;
-    letter-spacing: 1px;
-} */
+$button-size: 5vw;
+$button-margin: 0.25rem;
 
 .keyboard {
     margin: auto;
@@ -32,14 +10,21 @@
     border: 2px solid #0AFFEF;
     border-radius: 13px;
     background: #243441;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .simbol, .letter, .command, .arrow {
     display: inline-flex;
     box-sizing: border-box;
     margin: 0.125rem;
-    width: 5vw;
-    height: 5vw;
+    width: $button-size;
+    height: $button-size;
     max-width: 50px;
     max-height: 50px;
     justify-content: center;
@@ -83,27 +68,27 @@ span {
 }
 
 #Space {
-    width: calc(40vw + 7 * 0.25rem);
+    width: calc(8 * $button-size + 7 * $button-margin);
     max-width: calc(50px * 8 + 7 * 0.25rem);
 }
 
 #Backspace {
-    width: calc(10vw + 1 * 0.25rem);
+    width: calc(2 * $button-size + 1 * $button-margin);
     max-width: calc(100px + 1 * 0.25rem);
 }
 
 #Enter, #Shift {
-    width: calc(15vw + 2 * 0.25rem);
+    width: calc(3 * $button-size + 2 * $button-margin);
     max-width: calc(150px + 2 * 0.25rem);
 }
 
 #Alt, #Control, #Meta {
-    width: calc(25vw / 3 + 2 / 3 * 0.25rem);
+    width: calc(5 * $button-size / 3 + 2 / 3 * $button-margin);
     max-width: calc(250px / 3 + 2 / 3 * 0.25rem);
 }
 
 #Tab, #CapsLock {
-    width: calc(15vw + 2 * 0.25rem);
+    width: calc(3 * $button-size + 2 * $button-margin);
     max-width: calc(150px + 2 * 0.25rem);
 }
 
@@ -113,22 +98,22 @@ span {
 
 /* FOR RUSSIAN LAYOUT */
 .russian #Enter {
-    width: calc(10vw + 0.25rem);
+    width: calc(2 * $button-size + $button-margin);
     max-width: calc(100px + 0.25rem);
 }
 
 .russian #Shift {
-    width: calc(10vw + 1 * 0.25rem);
+    width: calc(2 * $button-size + 1 * $button-margin);
     max-width: calc(100px + 0.25rem);
 }
 
 .russian #Tab {
-    width: 5vw;
+    width: $button-size;
     max-width: 50px;
 }
 
 .russian  #CapsLock {
-    width: calc(10vw + 0.25rem);
+    width: calc(2 * $button-size + $button-margin);
     max-width: calc(100px + 0.25rem);
 }
 
@@ -172,21 +157,21 @@ br {
         font-size: 6.5px;
     }
     #Space {
-        width: calc(50vw + 9 * 0.18rem);
+        width: calc(10 * $button-size + 9 * 0.18rem);
     }
     #Backspace, #Enter {
-        width: calc(10vw + 1 * 0.18rem);
+        width: calc(2 * $button-size + 1 * 0.18rem);
     }
     #Enter {
-        width: calc(10vw + 0.18rem);
+        width: calc(2 * $button-size + 0.18rem);
     }
     #Shift {
-        width: calc(10vw + 1 * 0.18rem);
+        width: calc(2 * $button-size + 1 * 0.18rem);
     }
     #Alt, #Control, #Meta {
-        width: calc(25vw / 3 + 2 / 3 * 0.18rem);
+        width: calc(5 * $button-size / 3 + 2 / 3 * 0.18rem);
     }
     #Tab, #CapsLock {
-        width: calc(15vw + 2 * 0.18rem);
+        width: calc(3 * $button-size + 2 * 0.18rem);
     }
 }

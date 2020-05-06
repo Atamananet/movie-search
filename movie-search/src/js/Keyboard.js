@@ -1,4 +1,4 @@
-import '../style/keyboard.css';
+import '../style/keyboard.scss';
 
 function toggleHidden(element) { element.classList.toggle('hidden'); }
 class Keyboard {
