@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "test",
+    "start": "webpack-dev-server --open",
     "build": "webpack",
     "watch": "webpack --watch"
   },

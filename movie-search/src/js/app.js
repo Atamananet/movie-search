@@ -1,7 +1,5 @@
-// import 'bootstrap';
 import 'reset-css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/js/all';
 import 'swiper/css/swiper.min.css';
 import '../style/custom.scss';
 import '../style/main.scss';
@@ -16,14 +14,13 @@ const button = document.querySelector('.form-search__button');
 let searchPage = 0; // search page IMDbAPI param
 const slidesArray = [];
 
-
 async function getFilmsByTitle(title, page = 1) {
   const url = `https://www.omdbapi.com/?s=${title}&apikey=${imdbKey}&i&plot=full&page=${page}`;
   const response = await fetch(url);
   const data = await response.json();
 
   if (data.Response === 'False') { //
-    throw Error(`Not found for "${title}"`);
+    throw Error(`Not found for " ${title} "`);
   }
   return data;
 }
@@ -46,7 +43,7 @@ async function getTrailer(slideIndex) {
   const player = document.getElementById('player');
   const slide = slidesArray[slideIndex];
   const trailer = await slide.getTrailerIframe()
-    .catch((e) => { console.log(e.message); });
+    .catch((e) => { alertWithMessage(e.message); });
 
   player.innerHTML = '';
   player.append(trailer);
@@ -59,7 +56,6 @@ function alertWithMessage(message, type = 'danger') {
   alert.innerText = message;
   setTimeout(() => { alert.hidden = true; }, 3000);
 }
-
 
 async function searchHandler(event) {
   event.preventDefault(); // disable form sending and page reloading
@@ -87,9 +83,8 @@ async function searchHandler(event) {
       [input.value] = translation.text;
     }
   } catch (e) {
-    console.log(e);
+    alertWithMessage(e);
   }
-
 
   // get data with IMDb API
   const films = await getFilmsByTitle(input.value)
@@ -110,22 +105,21 @@ async function searchHandler(event) {
 
 // load next 10 films when slides end
 mySwiper.on('reachEnd', async () => {
-  if (mySwiper.isEnd && mySwiper.activeIndex > 4) {
+  if (mySwiper.isEnd) {
     searchPage += 1;
     button.innerHTML = '<div class="spinner-border" role="status"></div>';
     const films = await getFilmsByTitle(input.value, searchPage)
-      .catch((error) => console.log('in Swiper.on ', error));
+      .catch((error) => alertWithMessage(error.message));
 
     appendFilms(films)
       .catch((e) => {
-        console.log(e);
+        alertWithMessage(e);
       })
       .finally(() => { button.innerHTML = 'Search'; });
   }
 });
 
 button.addEventListener('click', searchHandler);
-
 
 // for start page
 (async () => {

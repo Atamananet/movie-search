@@ -1,9 +1,8 @@
-const webpack = require('webpack');
 const path = require('path');
 
 const config = {
   entry: './src/js/app.js',
-  mode: 'development',
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -76,6 +75,11 @@ const config = {
         ],
       },
     ],
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
   },
 };
 
