@@ -57,7 +57,7 @@ class Slide {
 
         const youtubeID = await movieTrailer(this.title, { id: true });
         // >> add year param <<
-        const url = `https://www.youtube.com/watch?v=${youtubeID}`;
+        // const url = `https://www.youtube.com/watch?v=${youtubeID}`;
         
         const iframe = document.createElement('IFRAME');
         iframe.src = `https://www.youtube.com/embed/${youtubeID}`;
@@ -66,7 +66,7 @@ class Slide {
         iframe.frameborder = 0;
         iframe.encryptedMedia = true;
         iframe.allowfullscreen = true;
-        debugger;
+        // debugger;
         return iframe;
     }
 }

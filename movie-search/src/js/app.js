@@ -14,12 +14,12 @@ const yandexKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ad
 const input = document.querySelector('.form-search__input');
 const button = document.querySelector('.form-search__button');
 let searchPage = 0; // search page IMDbAPI param
-
+const slidesArray = [];
 // load next 10 films when slides end
 mySwiper.on('reachEnd', async function loadNextPage() {
     if (mySwiper.isEnd && mySwiper.activeIndex > 4) {
         searchPage += 1;
-        utton.innerHTML = '<div class="spinner-border" role="status"></div>';
+        button.innerHTML = '<div class="spinner-border" role="status"></div>';
         const films = await getFilmsByTitle(input.value, searchPage)
             .catch((error) => console.log(error));
 
@@ -44,10 +44,21 @@ async function appendFilms(data) {
         const swiperSlide = document.createElement('DIV');
         swiperSlide.className = 'swiper-slide';
         const slideData = new Slide(film);
-        // add youtube trailer
-        // document.getElementById('player').append(await slideData.getTrailerIframe());
+        slidesArray.push(slideData);
         mySwiper.appendSlide(slideData.getElements());
     });
+}
+
+async function getTrailer(slideIndex) {
+    // get mySwiper.clickedIndex
+    // add youtube trailer
+    const player = document.getElementById('player');
+    const slide = slidesArray[slideIndex];
+    const trailer = await slide.getTrailerIframe()
+        .catch((e) => { console.log(e.message); });
+
+    player.innerHTML = '';
+    player.append(trailer);
 }
 
 button.addEventListener('click', async (event) => {
@@ -133,5 +144,18 @@ document.addEventListener('click', (event) => {
         if (input.value) { // show if input not empty
             buttonClear.show();
         }
+    }
+});
+
+// getTrailer handler
+document.addEventListener('click', (event) => {
+    const player = document.getElementById('player');
+    if (event.target.closest('.swiper-slide__poster')) {
+        player.style.display = 'flex';
+        getTrailer(mySwiper.clickedIndex);
+        return;
+    } else {
+        player.innerHTML = '';
+        player.style.display = 'none';
     }
 });
