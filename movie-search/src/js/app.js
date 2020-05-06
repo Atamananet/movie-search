@@ -81,13 +81,14 @@ async function searchHandler(event) {
   } catch (e) {
     alertWithMessage(e);
   }
-
   // get data with IMDb API
   const films = await getFilmsByTitle(input.value)
     .catch((error) => {
       if (error.message) {
-        alertWithMessage(error.message);
-        button.innerHTML = 'Search';
+        setTimeout(() => {
+          alertWithMessage(error.message);
+          button.innerHTML = 'Search';
+        }, 1500);
       }
     });
 
@@ -96,12 +97,16 @@ async function searchHandler(event) {
   mySwiper.removeAllSlides(); // clear swiper container
   slidesArray.length = 0;
   appendFilms(films)
-    .finally(() => { button.innerHTML = 'Search'; });
+    .finally(() => {
+      setTimeout(() => {
+        button.innerHTML = 'Search';
+      }, 1500);
+    });
 }
 
 // load next 10 films when slides end
 mySwiper.on('reachEnd', async () => {
-  if (mySwiper.isEnd) {
+  if (mySwiper.isEnd && mySwiper.activeIndex > 5) {
     searchPage += 1;
     button.innerHTML = '<div class="spinner-border" role="status"></div>';
     const films = await getFilmsByTitle(input.value, searchPage)
@@ -111,7 +116,11 @@ mySwiper.on('reachEnd', async () => {
       .catch((e) => {
         alertWithMessage(e);
       })
-      .finally(() => { button.innerHTML = 'Search'; });
+      .finally(() => {
+        setTimeout(() => {
+          button.innerHTML = 'Search';
+        }, 1500)
+      });
   }
 });
 

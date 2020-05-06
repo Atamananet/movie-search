@@ -41,7 +41,8 @@ class Slide {
     const response = await fetch(this.url);
     const data = await response.json();
     if (data.imdbRating === 'N/A') {
-      this.starsLine.innerHTML = 0;
+      this.starsLine.innerHTML = '';
+      this.rating.outerHTML = '';
     } else {
       const rating = Math.round(data.imdbRating);
       const [full, half] = [Math.floor(rating / 2), Math.floor(rating % 2)];

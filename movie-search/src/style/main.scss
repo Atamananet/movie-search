@@ -305,7 +305,7 @@ button:focus {
 }
 
 .swiper-slide__title {
-  min-height: 3rem;
+  height: 3rem;
   max-height: 3.5rem;
   color: $accent;
   text-decoration: underline;
@@ -313,6 +313,8 @@ button:focus {
   align-items: flex-end;
   font: $font-titles;
   padding-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .swiper-slide__year {
@@ -528,6 +530,7 @@ footer {
   }
 
   .swiper-slide__title {
+    height: 3.5rem;
     width: 100%;
     justify-content: center;
   }
