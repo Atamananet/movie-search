@@ -1,5 +1,6 @@
 import '../style/keyboard.css';
 
+function toggleHidden(element) { element.classList.toggle('hidden'); }
 class Keyboard {
   constructor(params) {
     this.ENGLISH = ['§ ±', '1 !', '2 @', '3 #', '4 $', '5 %', '6 ˆ', '7 &', '8 *', '9 (', '0 )', 'Backspace', '',
@@ -57,7 +58,6 @@ class Keyboard {
     const currBtn = button.toString();
     const alphabet = 'qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('');
     const controls = ['CapsLock', 'Shift', 'Ctrl', 'Meta', 'Alt', 'Control'];
-    const arrows = ['ArrowLeft', 'ArrowDown', 'ArrowRight', 'ArrowUp'];
 
     if (currBtn === '') { return 'new line'; }
     if (controls.includes(currBtn)) { return 'command'; }
@@ -97,7 +97,7 @@ class Keyboard {
 
   print(key) {
     const input = this.textArea;
-    const elem = document.querySelector(`[id='${key}']`);
+    
     switch (key) {
       case 'Backspace':
         input.value = input.value.slice(0, -1);
@@ -221,8 +221,6 @@ class Keyboard {
   }
 }
 
-function toggleHidden(element) { element.classList.toggle('hidden'); }
-
 const keyboard = new Keyboard({
   inputSelector: '.form-search__input',
   switchLanguageKeys: ['Shift', 'CTRL'],
@@ -277,13 +275,13 @@ document.addEventListener('mousedown', (event) => {
   const shiftX = event.clientX - currKeyboard.getBoundingClientRect().left;
   const shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
 
-  function onMouseMove(e) {
-    moveAt(e.pageX, e.pageY);
-  }
-
   function moveAt(pageX, pageY) {
     currKeyboard.style.left = `${pageX - shiftX}px`;
     currKeyboard.style.top = `${pageY - shiftY}px`;
+  }
+
+  function onMouseMove(e) {
+    moveAt(e.pageX, e.pageY);
   }
 
   currKeyboard.style.position = 'absolute';
