@@ -1,4 +1,4 @@
-import '../style/keyboard.scss';
+import '../style/keyboard.sass';
 
 function toggleHidden(element) { element.classList.toggle('hidden'); }
 function mouseupHandler(event) {
