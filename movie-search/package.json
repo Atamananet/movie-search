@@ -23,6 +23,7 @@
     "bootstrap": "^4.4.1",
     "popper.js": "^1.16.1",
     "reset-css": "^5.0.1",
+    "movie-trailer": "^2.0.6",
     "swiper": "^5.3.8"
   },
   "devDependencies": {
@@ -30,8 +31,10 @@
     "@babel/preset-env": "^7.9.5",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
     "file-loader": "^6.0.0",
-    "movie-trailer": "^2.0.6",
     "node-sass": "^4.14.1",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.2.0",

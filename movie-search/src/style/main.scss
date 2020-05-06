@@ -27,8 +27,6 @@ body {
   height: 100%;
 }
 
-
-
 .navbar-brand {
   font: $font-h1;
 }
@@ -159,14 +157,16 @@ body {
 .form-search__button {
   width: 112px;
   position: relative;
-  right: $clear-btn-width + $keyboard-btn-width - 16px;
-  height: $interface-height;
-  background-color: $primary;
-  color: $accent;
+  display: flex;
+  justify-content: center;
+  right: 39px;
+  height: 40px;
+  background-color: #243441;
+  color: #0affef;
   border: none;
   box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.15);
   border-radius: 5px;
-  font: $font-titles;
+  font: 500 18px/21px Roboto;
 
   :focus {
     outline: none;
@@ -382,7 +382,6 @@ footer {
   }
 }
 
-
 @media (max-width: 374px) {
   html {
     font-size: 12px;
@@ -467,8 +466,6 @@ footer {
     display: none;
   }
 }
-
-
 
 @media (min-width: 375px) and (max-width: 767px) {
   html {
@@ -597,7 +594,7 @@ footer {
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
   }
-  
+
   .swiper-slide__poster:after {
     content: "";
     background-image: url(../img/youtube.svg);
@@ -610,9 +607,9 @@ footer {
     right: 0;
     bottom: 0;
     opacity: 0;
-    transition: all .4s ease-out;
+    transition: all 0.4s ease-out;
   }
-  
+
   .swiper-slide__poster:hover:before,
   .swiper-slide__poster:hover:after {
     opacity: 1;

@@ -6,7 +6,7 @@ const config = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -16,7 +16,7 @@ const config = {
           'style-loader',
           'css-loader',
         ],
-        exclude: /\.module\.css$/
+        exclude: /\.module\.css$/,
       },
       {
         test: /\.css$/,
@@ -26,11 +26,11 @@ const config = {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
-              modules: true
-            }
-          }
+              modules: true,
+            },
+          },
         ],
-        include: /\.module\.css$/
+        include: /\.module\.css$/,
       },
       {
         test: /\.s[ac]ss$/i,
@@ -46,10 +46,10 @@ const config = {
           {
             loader: 'url-loader',
             options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
+              mimetype: 'image/png',
+            },
+          },
+        ],
       },
       {
         test: /\.(woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
@@ -58,9 +58,9 @@ const config = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'fonts/'
-            }
-          }
+              outputPath: 'fonts/',
+            },
+          },
         ],
       },
       {
@@ -70,13 +70,13 @@ const config = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
-              outputPath: 'src/img/'
-            }
-          }
+              outputPath: 'src/img/',
+            },
+          },
         ],
       },
-    ]
-  }
+    ],
+  },
 };
 
 module.exports = config;
