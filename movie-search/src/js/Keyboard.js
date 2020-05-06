@@ -97,7 +97,7 @@ class Keyboard {
 
   print(key) {
     const input = this.textArea;
-    
+
     switch (key) {
       case 'Backspace':
         input.value = input.value.slice(0, -1);

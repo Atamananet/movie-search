@@ -1,7 +1,7 @@
 // import 'bootstrap';
 import 'reset-css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/js/all.js';
+import '@fortawesome/fontawesome-free/js/all';
 import 'swiper/css/swiper.min.css';
 import '../style/custom.scss';
 import '../style/main.scss';
@@ -84,7 +84,7 @@ async function searchHandler(event) {
       const translation = await responseTranslate.json();
       const message = `Showing results for ${translation.text[0]}`;
       alertWithMessage(message, 'primary');
-      input.value = translation.text[0];
+      [input.value] = translation.text;
     }
   } catch (e) {
     console.log(e);
@@ -105,7 +105,7 @@ async function searchHandler(event) {
   mySwiper.removeAllSlides(); // clear swiper container
   slidesArray.length = 0;
   appendFilms(films)
-    .finally(() => button.innerHTML = 'Search');
+    .finally(() => { button.innerHTML = 'Search'; });
 }
 
 // load next 10 films when slides end
@@ -120,7 +120,7 @@ mySwiper.on('reachEnd', async () => {
       .catch((e) => {
         console.log(e);
       })
-      .finally(() => button.innerHTML = 'Search');
+      .finally(() => { button.innerHTML = 'Search'; });
   }
 });
 
@@ -131,14 +131,14 @@ button.addEventListener('click', searchHandler);
 (async () => {
   const films = await getFilmsByTitle('RED')
     .catch((error) => {
-      if (error.message = 'Not found') {
+      if (error.message === 'Not found') {
         alertWithMessage(error.message);
       }
       // console.error('URLRequestError:' + error.message);
     });
 
   appendFilms(films)
-    .finally(() => button.innerHTML = 'Search');
+    .finally(() => { button.innerHTML = 'Search'; });
 })();
 
 const buttonClear = document.querySelector('.form-search__clear');
@@ -164,10 +164,11 @@ document.addEventListener('click', (event) => {
   // hide button if click not in input
   if (!event.target.closest('.form-search__input')) {
     buttonClear.hide();
-  } else { // if click in input
-    if (input.value) { // show if input not empty
-      buttonClear.show();
-    }
+    return;
+  }
+  // if click in input
+  if (input.value) { // show if input not empty
+    buttonClear.show();
   }
 });
 
