@@ -3,12 +3,12 @@ const input = document.querySelector('.form-search__input');
 const button = document.querySelector('.form-search__button');
 const searchPage = { // search page IMDbAPI param
     current: 0,
-    implement() { this.data++; },
+    implement() { this.current++; },
     get () { return this.current; }
 }; 
 
 const slidesArray = [];
-searchPage.implement = function() { this}
+
 export {
   yandexKey, input, button, searchPage, slidesArray,
 };

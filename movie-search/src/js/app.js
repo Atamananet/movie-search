@@ -17,7 +17,7 @@ mySwiper.on('reachEnd', async () => {
   if (mySwiper.isEnd && mySwiper.activeIndex > 4) {
     searchPage.implement();
     button.innerHTML = '<div class="spinner-border" role="status"></div>';
-    const films = await getFilmsByTitle(input.value, searchPage)
+    const films = await getFilmsByTitle(input.value, searchPage.current)
       .catch((error) => alertWithMessage(error.message));
 
     appendFilms(films)
