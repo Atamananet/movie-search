@@ -4,9 +4,10 @@ async function getFilmsByTitle(title, page = 1) {
   const response = await fetch(url);
   const data = await response.json();
 
-  if (data.Response === 'False') { //
-    throw Error(`Not found for " ${title} "`);
-  }
+  // if (data.Response === 'False') { //
+  //   throw Error(`Not found for " ${title} "`);
+  // }
+  // debugger;
   return data;
 }
 

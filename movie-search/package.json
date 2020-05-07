@@ -4,7 +4,7 @@
   "description": "movie-search rss task",
   "main": "app.js",
   "scripts": {
-    "test": "eslint src/js/*.js --fix",
+    "test": "jest test",
     "start": "webpack-dev-server --open",
     "build": "webpack",
     "watch": "webpack --watch"
@@ -22,14 +22,16 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "bootstrap": "^4.4.1",
+    "movie-trailer": "^2.0.6",
     "popper.js": "^1.16.1",
     "reset-css": "^5.0.1",
-    "movie-trailer": "^2.0.6",
-    "swiper": "^5.3.8"
+    "swiper": "^5.3.8",
+    "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-env": "^7.9.6",
+    "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.3",
     "eslint": "^6.8.0",
