@@ -60,8 +60,11 @@ class Slide {
     if (!this.title) { return null; }
 
     const youtubeID = await movieTrailer(this.title, { id: true });
-    const iframe = document.createElement('IFRAME');
 
+    if (!youtubeID) {
+      throw Error('trailer not found');
+    }
+    const iframe = document.createElement('IFRAME');
     iframe.src = `https://www.youtube.com/embed/${youtubeID}`;
     iframe.frameborder = 0;
     iframe.encryptedMedia = true;

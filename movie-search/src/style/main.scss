@@ -58,6 +58,19 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.stug {
+  width: 100%;
+  height: 300px;
+  background-image: url(../img/film.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  &::before {
+    content: "Trailer not found";
+    display: flex;
+    justify-content: center;
+  }
+}
 // end temp
 
 body {
