@@ -14,8 +14,7 @@ import searchHandler from './searchHandler';
 
 // load next 10 films when slides end
 mySwiper.on('reachEnd', async () => {
-  if (mySwiper.isEnd && mySwiper.activeIndex > 5) {
-    debugger;
+  if (mySwiper.isEnd && mySwiper.activeIndex > 4) {
     searchPage.implement();
     button.innerHTML = '<div class="spinner-border" role="status"></div>';
     const films = await getFilmsByTitle(input.value, searchPage)

@@ -20,5 +20,4 @@ async function getTrailer(slideIndex) {
   player.append(trailer);
 }
 
-
 export default getTrailer;
