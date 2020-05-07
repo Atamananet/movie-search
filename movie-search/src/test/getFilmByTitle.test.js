@@ -15,4 +15,11 @@ describe('test getFilmsByTitle', () => {
         expect(have).toHaveProperty('Search.0', expected); // true
         expect(have).toHaveProperty('Response', "True"); // true
     });
+
+    test('throw error with falsy', async () => {
+        expect(() => { getFilmByTitle('').toThrow(); });
+        expect(() => { getFilmByTitle(undefined).toThrow(); });
+        expect(() => { getFilmByTitle(null).toThrow(); });
+        expect(() => { getFilmByTitle({}).toThrow(); });
+    });
 });

@@ -3,11 +3,11 @@ async function getFilmsByTitle(title, page = 1) {
   const url = `https://www.omdbapi.com/?s=${title}&apikey=${imdbKey}&i&plot=full&page=${page}`;
   const response = await fetch(url);
   const data = await response.json();
+  
+  if (data.Response !== 'True') { //
+    throw Error(`Not found for " ${title} "`);
+  }
 
-  // if (data.Response === 'False') { //
-  //   throw Error(`Not found for " ${title} "`);
-  // }
-  // debugger;
   return data;
 }
 
