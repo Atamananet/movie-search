@@ -1,16 +1,19 @@
 import 'reset-css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'swiper/css/swiper.min.css';
 import '../style/custom.scss';
 import '../style/main.scss';
-import mySwiper from './Swiper';
 import './Keyboard';
+import mySwiper from './Swiper';
 import alertWithMessage from './alertWithMessage';
-import './getFilmByTitle';
 import appendFilms from './appendFilms';
-import { input, button, searchPage } from './variables';
-import getTrailer from './getTrailer';
+import showTrailer from './showTrailer';
 import searchHandler from './searchHandler';
+import { input, button, searchPage } from './variables';
+
+const player = document.querySelector('#player');
+player.showTrailer = showTrailer;
+const playerContainer = document.querySelector('.player-container');
+const swiperContainer = document.querySelector('.swiper-controls-container');
+const buttonClear = document.querySelector('.form-search__clear');
 
 // load next 10 films when slides end
 mySwiper.on('reachEnd', async () => {
@@ -36,16 +39,15 @@ button.addEventListener('click', searchHandler);
 
 // for start page
 (async () => {
-  const films = await input.getFilmsByTitle(1,'red')
+  const films = await input.getFilmsByTitle(1, 'red')
     .catch((error) => {
-        alertWithMessage(error.message);
+      alertWithMessage(error.message);
     });
 
   appendFilms(films)
     .finally(() => { button.innerHTML = 'Search'; });
 })();
 
-const buttonClear = document.querySelector('.form-search__clear');
 buttonClear.hide = function hide() { this.style.zIndex = -1; };
 buttonClear.show = function show() { this.style.zIndex = 1; };
 
@@ -78,15 +80,12 @@ document.addEventListener('click', (event) => {
   }
 });
 
-// getTrailer handler
+// showTrailer handler
 document.addEventListener('click', (event) => {
-  const player = document.querySelector('#player');
-  const playerContainer = document.querySelector('.player-container');
-  const swiperContainer = document.querySelector('.swiper-controls-container');
   if (event.target.closest('.swiper-slide__poster')) {
     playerContainer.hidden = false;
     swiperContainer.style.opacity = 0;
-    getTrailer(mySwiper.clickedIndex);
+    player.showTrailer(mySwiper.clickedIndex);
   } else {
     player.innerHTML = '';
     playerContainer.hidden = true;

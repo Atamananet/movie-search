@@ -20,21 +20,21 @@ class Slide {
     const title = document.createElement('A');
     const poster = document.createElement('DIV');
     const year = document.createElement('DIV');
-    const wrapper = document.createElement('DIV');
+    const film = document.createElement('DIV');
 
     title.className = 'swiper-slide__title';
     poster.className = 'swiper-slide__poster';
     year.className = 'swiper-slide__year';
-    wrapper.className = 'swiper-slide';
+    film.className = 'swiper-slide';
 
     title.innerText = this.title;
     title.href = `https://www.imdb.com/title/${this.imdbID}/videogallery/`;
     poster.append(this.rating, this.poster);
     year.innerHTML = this.year;
     this.setRating();
-    wrapper.append(title, poster, year, this.starsLine);
+    film.append(title, poster, year, this.starsLine);
 
-    return wrapper;
+    return film;
   }
 
   async setRating() {

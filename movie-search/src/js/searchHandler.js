@@ -2,9 +2,13 @@ import { slidesArray } from './variables';
 import alertWithMessage from './alertWithMessage';
 import mySwiper from './Swiper';
 import appendFilms from './appendFilms';
-import './getFilmByTitle';
-import './translateToEnglish';
-import './isTextRussian';
+import getFilmsByTitle from './getFilmsByTitle';
+import toEnglish from './toEnglish';
+import isRussian from './isRussian';
+
+Element.prototype.getFilmsByTitle = getFilmsByTitle;
+Element.prototype.isRussian = isRussian;
+Element.prototype.toEnglish = toEnglish;
 
 async function searchHandler(event) {
   event.preventDefault(); // disable form sending and page reloading
@@ -30,10 +34,10 @@ async function searchHandler(event) {
   // get data with IMDb API
   const films = await input.getFilmsByTitle()
     .catch((error) => {
-        setTimeout(() => {
-          alertWithMessage(error.message);
-          button.innerHTML = 'Search';
-        }, 1500);
+      setTimeout(() => {
+        alertWithMessage(error.message);
+        button.innerHTML = 'Search';
+      }, 1500);
     });
 
   if (!films) { return; }

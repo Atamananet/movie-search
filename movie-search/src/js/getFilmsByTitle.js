@@ -1,11 +1,11 @@
-async function getFilmsByTitle(page = 1, title =this.value) {
+async function getFilmsByTitle(page = 1, title = this.value) {
   const imdbKey = '1d7bd802'; // private key
   const url = `https://www.omdbapi.com/?s=${title}&apikey=${imdbKey}&i&plot=full&page=${page}`;
   const response = await fetch(url)
     .catch((e) => {
-        if (e.message === 'Failed to fetch') {
-          throw Error('Request Error: no connection');
-        }
+      if (e.message === 'Failed to fetch') {
+        throw Error('Request Error: no connection');
+      }
     });
   const data = await response.json();
 
@@ -16,5 +16,4 @@ async function getFilmsByTitle(page = 1, title =this.value) {
   return data;
 }
 
-const input = document.querySelector('.form-search__input') || {};
-input.getFilmsByTitle = getFilmsByTitle;
+export default getFilmsByTitle;

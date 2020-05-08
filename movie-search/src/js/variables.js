@@ -2,10 +2,10 @@ const yandexKey = 'trnsl.1.1.20200430T142719Z.fc3de47da4df3577.547da0b45a7aa24ad
 const input = document.querySelector('.form-search__input');
 const button = document.querySelector('.form-search__button');
 const searchPage = { // search page IMDbAPI param
-    current: 0,
-    implement() { this.current++; },
-    get () { return this.current; }
-}; 
+  current: 0,
+  implement() { this.current += 1; },
+  get() { return this.current; },
+};
 
 const slidesArray = [];
 

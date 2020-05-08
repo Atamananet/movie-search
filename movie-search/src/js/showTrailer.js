@@ -1,23 +1,23 @@
 import { slidesArray } from './variables';
 import alertWithMessage from './alertWithMessage';
 
-async function getTrailer(slideIndex) {
+// add youtube trailer
+async function showTrailer(slideIndex) {
   // get mySwiper.clickedIndex
-  // add youtube trailer
-  const player = document.getElementById('player');
   const slide = slidesArray[slideIndex];
   const trailer = await slide.getTrailerIframe()
     .catch((e) => {
       alertWithMessage(e.message);
     });
+
   if (!trailer) {
     const stug = document.createElement('DIV');
     stug.className = 'stug';
-    player.append(stug);
+    this.append(stug);
     return;
   }
-  player.innerHTML = '';
-  player.append(trailer);
+  this.innerHTML = '';
+  this.append(trailer);
 }
 
-export default getTrailer;
+export default showTrailer;

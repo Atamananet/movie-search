@@ -7,10 +7,11 @@ async function appendFilms(data) {
   // push search results into swiper
   data.Search.forEach(async (film) => {
     const swiperSlide = document.createElement('DIV');
-    swiperSlide.className = 'swiper-slide';
     const slideData = new Slide(film);
+    
+    swiperSlide.className = 'swiper-slide';
     slidesArray.push(slideData);
-    mySwiper.appendSlide(slideData.getElements());
+    mySwiper.appendSlide(slideData.getFilm());
   });
 }
 

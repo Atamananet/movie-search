@@ -296,6 +296,7 @@ button:focus {
   overflow: hidden;
   display: flex;
   justify-content: center;
+  box-shadow: #172128 0 0 7px 4px;
 
   .swiper-slide__rating {
     display: flex;
