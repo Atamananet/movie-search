@@ -6,7 +6,7 @@ import '../style/main.scss';
 import mySwiper from './Swiper';
 import './Keyboard';
 import alertWithMessage from './alertWithMessage';
-import getFilmsByTitle from './getFilmByTitle';
+import './getFilmByTitle';
 import appendFilms from './appendFilms';
 import { input, button, searchPage } from './variables';
 import getTrailer from './getTrailer';
@@ -17,7 +17,7 @@ mySwiper.on('reachEnd', async () => {
   if (mySwiper.isEnd && mySwiper.activeIndex > 4) {
     searchPage.implement();
     button.innerHTML = '<div class="spinner-border" role="status"></div>';
-    const films = await getFilmsByTitle(input.value, searchPage.current)
+    const films = await input.getFilmsByTitle(searchPage.current)
       .catch((error) => alertWithMessage(error.message));
 
     appendFilms(films)
@@ -36,11 +36,9 @@ button.addEventListener('click', searchHandler);
 
 // for start page
 (async () => {
-  const films = await getFilmsByTitle('RED')
+  const films = await input.getFilmsByTitle(1,'red')
     .catch((error) => {
-      if (error.message === 'Not found') {
         alertWithMessage(error.message);
-      }
     });
 
   appendFilms(films)
