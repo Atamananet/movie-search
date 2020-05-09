@@ -329,6 +329,13 @@ button:focus {
   padding-bottom: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  &:visited {
+    color: #0daca2;
+  }
+  &:hover {
+    color: #99fbf5;
+  }
 }
 
 .swiper-slide__year {

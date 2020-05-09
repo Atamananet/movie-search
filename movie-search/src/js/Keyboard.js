@@ -276,12 +276,12 @@ document.addEventListener('mousedown', (event) => {
 
   if (!currKeyboard) { return; }
 
-  const shiftX = event.clientX - currKeyboard.getBoundingClientRect().left;
+  const shiftX = currKeyboard.getBoundingClientRect().left;
   const shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
 
   function moveAt(pageX, pageY) {
     document.querySelectorAll('.keyboard').forEach((current) => {
-      current.style.left = `${pageX - shiftX}px`;
+      current.style.left = `${shiftX}px`;
       current.style.top = `${pageY - shiftY}px`;
     });
   }

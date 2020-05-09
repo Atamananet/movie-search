@@ -1,5 +1,9 @@
 $button-width: 5vw
 $button-margin: 0.5vw
+$primary-dark: #1d2831
+$accent: #0affef
+$primary: #243441
+$visited: #c7d4df
 
 @function getWidth($btn-count) 
     @return $button-width * $btn-count + $button-margin * ($btn-count - 1)
@@ -8,14 +12,14 @@ $button-margin: 0.5vw
 .keyboard
   margin: auto
   // min-width: 72.5vw
-  max-width: 730px
+  max-width: calc(getWidth(13) + 16px)
   z-index: 10
   padding: 2px
   position: absolute
   top: 20%
-  border: 2px solid #0AFFEF
+  border: 2px solid $accent
   border-radius: 13px
-  background: #243441
+  background: $primary
   -webkit-touch-callout: none
   -webkit-user-select: none
   -khtml-user-select: none
@@ -23,13 +27,16 @@ $button-margin: 0.5vw
   -ms-user-select: none
   user-select: none
   padding-top: 1.5rem 
+  cursor: grab
+  &:checked,
+  &:focus
+    cursor: grabbing
   &::after
     content: "Drag'n'Drop"
     position: absolute
     top: 0rem
     right: 4rem
   &::before
-    
     content: "Shift + Ctrl to switch language"
     position: absolute
     top: 0rem
@@ -46,18 +53,14 @@ $button-margin: 0.5vw
   justify-content: center
   align-items: center
   border-radius: 0.5vw
-  background-color: #C7D4DF
-  color: #1D2831
+  background-color: $visited
+  color: $primary-dark
   font-size: 1rem
   font-weight: bold
 
 .keyboard span:hover
   background-color: rgba(10, 255, 239, 0.5)
-  border-color: #666666
   color: #fff
-
-.command
-  width: 112px
 
 .hidden
   display: none
@@ -147,12 +150,9 @@ br
   padding-left: 10px
   border-left: 10px solid yellow
 
-@media (max-width: 375px)
+@media (max-width: 768px)
   .keyboard
     border-radius: 5px
-    position: fixed
-    top: initial
-    bottom: 20px
 
   .simbol, .letter, .command, .arrow
     margin: 0.09rem
@@ -160,20 +160,28 @@ br
     font-size: 6.5px
 
   #Space
-    width: calc(50vw + 9 * 0.18rem)
+    width: calc(40vw + 7 * 0.18rem)
 
   #Backspace
     width: calc(10vw + 1 * 0.18rem)
 
   #Enter
-    width: calc(10vw + 1 * 0.18rem)
-    width: calc(10vw + 0.18rem)
+    width: calc(15vw + 2 * 0.18rem)
 
   #Shift
-    width: calc(10vw + 1 * 0.18rem)
+    width: calc(15vw + 2 * 0.18rem)
 
   #Alt, #Control, #Meta
     width: calc(25vw / 3 + 2 / 3 * 0.18rem)
 
   #Tab, #CapsLock
     width: calc(15vw + 2 * 0.18rem)
+
+@media (max-width: 560px)
+  .keyboard
+    &::after
+      right: 1rem
+      font-size: 10px 
+    &::before
+      left: 1rem
+      font-size: 10px
