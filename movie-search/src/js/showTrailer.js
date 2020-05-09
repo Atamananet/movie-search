@@ -1,9 +1,14 @@
 import { slidesArray } from './variables';
-import alertWithMessage from './alertWithMessage';
 
-// add youtube trailer
+/**
+ * Show Youtube video in container
+ *
+ * Used 'slideIndex' as a paramert to find current slide
+ * and add Youtube player iframe into 'this'   
+ * 
+ * @param {number} slideIndex     Used to get current Slide object in slidesArray
+ */
 async function showTrailer(slideIndex) {
-  // get mySwiper.clickedIndex
   const slide = slidesArray[slideIndex];
   const trailer = await slide.getTrailerIframe();
 
