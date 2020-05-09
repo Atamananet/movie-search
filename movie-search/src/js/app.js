@@ -9,6 +9,8 @@ import showTrailer from './showTrailer';
 import searchHandler from './searchHandler';
 import { input, button, searchPage } from './variables';
 
+import './description';
+
 const player = document.querySelector('#player');
 const playerContainer = document.querySelector('.player-container');
 const swiperContainer = document.querySelector('.swiper-controls-container');

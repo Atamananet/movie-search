@@ -71,6 +71,16 @@ body {
     justify-content: center;
   }
 }
+
+.description-constainer {
+  position: absolute;
+  background-color: #1d2831e0;
+  z-index: 11;
+  width: 300px;
+  padding: 20px;
+  text-align: justify;
+  color: #c7d4df;
+}
 // end temp
 
 body {
@@ -297,6 +307,7 @@ button:focus {
   display: flex;
   justify-content: center;
   box-shadow: #172128 0 0 7px 4px;
+  cursor: pointer;
 
   .swiper-slide__rating {
     display: flex;

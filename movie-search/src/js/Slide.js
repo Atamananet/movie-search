@@ -39,12 +39,12 @@ class Slide {
 
   async setRating() {
     const response = await fetch(this.url);
-    const data = await response.json();
-    if (data.imdbRating === 'N/A') {
+    this.data = await response.json();
+    if (this.data.imdbRating === 'N/A') {
       this.starsLine.innerHTML = '';
       this.rating.outerHTML = '';
     } else {
-      const rating = Math.round(data.imdbRating);
+      const rating = Math.round(this.data.imdbRating);
       const [full, half] = [Math.floor(rating / 2), Math.floor(rating % 2)];
       const sFull = '<i class="fas fa-star fass_full"></i>';
       const sHalf = '<i class="fas fa-star-half-alt"></i>';
@@ -52,7 +52,7 @@ class Slide {
       this.starsLine.innerHTML += sFull.repeat(full);
       this.starsLine.innerHTML += sHalf.repeat(half);
       this.starsLine.innerHTML += sPool.repeat(5 - full - half);
-      this.rating.innerHTML = `<span>IMDb<span> ${data.imdbRating}`;
+      this.rating.innerHTML = `<span>IMDb<span> ${this.data.imdbRating}`;
     }
   }
 

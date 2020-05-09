@@ -315,7 +315,6 @@ document.addEventListener('mousedown', (event) => {
     document.removeEventListener('mousemove', onMouseMove);
     currKeyboard.onmouseup = null;
     currKeyboard.classList.remove('grabbing');
-
   };
 });
 
