@@ -30,6 +30,7 @@ function showDescription(event) {
         currentSlide.data &&
         currentSlide.data.Plot) {
         plot.innerText = currentSlide.data.Plot;
+        
     }
 
     document.body.append(plot);
