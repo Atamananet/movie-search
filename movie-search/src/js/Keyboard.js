@@ -195,6 +195,19 @@ class Keyboard {
     this.characters = [...document.getElementsByClassName('simbol')];
     this.letters = [...document.getElementsByClassName('letter')];
 
+    // add switch language button
+    [ruKeyboard, engKeyboard].forEach((keyboard) => {
+      const switcher = keyboard.firstChild;
+      switcher.innerHTML = '<i class="fa fa-language" aria-hidden="true"></i>';
+      switcher.classList.add('switch-language');
+      switcher.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        engKeyboard.classList.toggle('hidden');
+        ruKeyboard.classList.toggle('hidden');
+      });
+    });
+    
+
     // keyboard events listeners
     this.handler = this.keydownHandler.bind(this);
     document.addEventListener('keydown', this.handler);
