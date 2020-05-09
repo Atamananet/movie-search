@@ -280,8 +280,10 @@ document.addEventListener('mousedown', (event) => {
   const shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
 
   function moveAt(pageX, pageY) {
-    currKeyboard.style.left = `${pageX - shiftX}px`;
-    currKeyboard.style.top = `${pageY - shiftY}px`;
+    document.querySelectorAll('.keyboard').forEach((current) => {
+      current.style.left = `${pageX - shiftX}px`;
+      current.style.top = `${pageY - shiftY}px`;
+    });
   }
 
   function onMouseMove(e) {
