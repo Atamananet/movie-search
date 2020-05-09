@@ -8,7 +8,7 @@ class Slide {
     this.poster.src = json.Poster === 'N/A' ? './src/img/no-poster-available.png' : json.Poster;
     this.year = json.Year;
     this.imdbID = json.imdbID;
-    this.url = `https://www.omdbapi.com/?i=${this.imdbID}&plot=full&apikey=${this.apiKey}`;
+    this.url = `https://www.omdbapi.com/?i=${this.imdbID}&plot=full&apikey=${this.apiKey}&type=movie`;
     this.starsLine = document.createElement('DIV');
     this.starsLine.className = 'swiper-slide__stars';
     this.rating = document.createElement('DIV');
