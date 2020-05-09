@@ -14,6 +14,7 @@ async function appendFilms(data) {
     swiperSlide.className = 'swiper-slide';
     slidesArray.push(slideData);
     mySwiper.appendSlide(slideData.getFilm());
+    mySwiper.update(); // let it be
   });
 }
 

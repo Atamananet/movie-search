@@ -5,6 +5,7 @@ $secondary: #c7d4df !default;
 $interface: #7c858d !default;
 $visited: #c7d4df;
 $accent: #0affef !default;
+$accent-dark: #07cec1;
 $disabled: #ced4da !default;
 $shadow-1: #ffffff !default;
 $shadow-2: #000000 !default;
@@ -185,13 +186,17 @@ body {
   right: 39px;
   height: 40px;
   background-color: #243441;
-  color: #0affef;
+  color: $accent-dark;
   border: none;
   box-shadow: 2px 1px 4px rgba(0, 0, 0, 0.5), -2px -2px 4px rgba(255, 255, 255, 0.15);
   border-radius: 5px;
   font: 500 18px/21px Roboto;
 
-  :focus {
+  &:hover {
+    color: $accent;
+  }
+
+  &:focus {
     outline: none;
   }
 }
@@ -230,7 +235,13 @@ body {
   svg.fa-caret-square-left {
     height: 50px;
     width: 50px;
-    color: $accent;
+    color: $accent-dark;
+  }
+  &:hover {
+    svg.fa-caret-square-right,
+    svg.fa-caret-square-left {
+      color: $accent;
+    }
   }
 }
 
