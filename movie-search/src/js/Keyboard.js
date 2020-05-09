@@ -206,7 +206,7 @@ class Keyboard {
         ruKeyboard.classList.toggle('hidden');
       });
     });
-    
+
 
     // keyboard events listeners
     this.handler = this.keydownHandler.bind(this);
@@ -288,7 +288,7 @@ document.addEventListener('mousedown', (event) => {
   const currKeyboard = event.target.closest('.keyboard');
 
   if (!currKeyboard) { return; }
-
+  currKeyboard.classList.add('grabbing');
   const shiftX = currKeyboard.getBoundingClientRect().left;
   const shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
 
@@ -314,6 +314,8 @@ document.addEventListener('mousedown', (event) => {
   currKeyboard.onmouseup = function mouseDropHandler() {
     document.removeEventListener('mousemove', onMouseMove);
     currKeyboard.onmouseup = null;
+    currKeyboard.classList.remove('grabbing');
+
   };
 });
 
