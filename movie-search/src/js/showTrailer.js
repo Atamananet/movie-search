@@ -5,10 +5,7 @@ import alertWithMessage from './alertWithMessage';
 async function showTrailer(slideIndex) {
   // get mySwiper.clickedIndex
   const slide = slidesArray[slideIndex];
-  const trailer = await slide.getTrailerIframe()
-    .catch((e) => {
-      alertWithMessage(e.message);
-    });
+  const trailer = await slide.getTrailerIframe();
 
   if (!trailer) {
     const stug = document.createElement('DIV');

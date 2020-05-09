@@ -17,34 +17,33 @@ async function searchHandler(event) {
   button.innerHTML = '<div class="spinner-border" role="status"><span class="sr-only"></span></div>';
 
   // use Yandex Translate API to detect language
-  const input = document.querySelector('.form-search__input');
   try {
+    const input = document.querySelector('.form-search__input');
     if (!input.value) {
       throw Error('Yandex API error: empty request');
     }
 
-    // use Yandex Translate API to translate search request
-    if (input.isRussian()) {
-      // translate input value to english
-      input.value = await input.toEnglish();
+    if (await input.isRussian()) { // use Yandex Translate API to translate search request
+      input.value = await input.toEnglish(); // translate input value to english
     }
-  } catch (e) {
-    alertWithMessage(e);
+    const films = await input.getFilmsByTitle(); // get data with IMDb API
+
+    if (films.Response !== 'True') {
+      throw Error(`Not found for ${input.value}`);
+    }
+
+    mySwiper.removeAllSlides(); // clear swiper container
+    slidesArray.length = 0;
+    appendFilms(films);
+    button.innerHTML = 'Search';
+  } catch (error) {
+    button.innerHTML = 'Search';
+    if (error.message == 'Failed to fetch') {
+      alertWithMessage('No internet connection');
+      return;
+    }
+    alertWithMessage(error);
   }
-  // get data with IMDb API
-  const films = await input.getFilmsByTitle()
-    .catch((error) => {
-      setTimeout(() => {
-        alertWithMessage(error.message);
-        button.innerHTML = 'Search';
-      }, 1500);
-    });
-
-  if (!films) { return; }
-
-  mySwiper.removeAllSlides(); // clear swiper container
-  slidesArray.length = 0;
-  appendFilms(films);
 }
 
 export default searchHandler;

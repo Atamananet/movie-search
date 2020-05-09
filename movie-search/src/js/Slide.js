@@ -16,7 +16,7 @@ class Slide {
     this.trailerID = null;
   }
 
-  getElements() {
+  getFilm() {
     const title = document.createElement('A');
     const poster = document.createElement('DIV');
     const year = document.createElement('DIV');

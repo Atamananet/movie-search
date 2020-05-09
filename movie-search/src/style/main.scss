@@ -366,8 +366,9 @@ button:focus {
 }
 
 .container__alert {
-  min-height: 50px;
+  height: 50px;
   text-align: center;
+  overflow: hidden;
   font: $font-titles;
 }
 
@@ -434,7 +435,7 @@ footer {
   }
 
   .container__alert {
-    min-height: 25px;
+    height: 25px;
   }
 
   .container__alert .alert {
@@ -520,7 +521,7 @@ footer {
   }
 
   .container__alert {
-    min-height: 25px;
+    height: 25px;
   }
 
   .container__alert .alert {
