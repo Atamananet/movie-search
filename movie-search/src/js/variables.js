@@ -6,8 +6,11 @@ const imdbKey = '1d7bd802';
 
 const input = document.querySelector('.form-search__input');
 const button = document.querySelector('.form-search__button');
-
-const searchPage = { // search page IMDbAPI param
+/** 
+@mixin 
+search page IMDbAPI param
+*/
+const searchPage = { 
   current: 0,
   implement() { this.current += 1; },
   get() { return this.current; },
@@ -22,8 +25,6 @@ player.showTrailer = showTrailer;
 const playerContainer = document.querySelector('.player-container');
 const swiperContainer = document.querySelector('.swiper-controls-container');
 const buttonClear = document.querySelector('.form-search__clear');
-
-
 
 Element.prototype.hide = function() { this.style.zIndex = -1; }
 Element.prototype.show = function() { this.style.zIndex = 1; }
