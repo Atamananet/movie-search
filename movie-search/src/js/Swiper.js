@@ -1,4 +1,5 @@
 import Swiper from 'swiper';
+import 'swiper/swiper.scss';
 
 const mySwiper = new Swiper('.swiper-container', {
   navigation: {

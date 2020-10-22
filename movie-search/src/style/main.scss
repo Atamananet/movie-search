@@ -183,6 +183,7 @@ body {
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   right: 39px;
   height: 40px;
   background-color: #243441;
@@ -221,6 +222,10 @@ body {
 
 .swiper-button-prev,
 .swiper-button-next {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 64px;
   height: 64px;
   top: calc(50% - 50px);
