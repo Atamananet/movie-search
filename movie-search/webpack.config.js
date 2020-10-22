@@ -1,11 +1,18 @@
-const path = require('path');
+const webpack = require("webpack");
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
-  entry: './src/js/app.js',
   mode: 'development',
+  devtool: false,
+  entry: './src/js/app.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    // sourceMapFilename: '[name].js.map',
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
@@ -13,42 +20,41 @@ const config = {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader',
+          'css-loader'
         ],
-        exclude: /\.module\.css$/,
       },
       {
-        test: /\.css$/,
+        test: /\.sass|scss$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
-              modules: true,
-            },
+              // sourceMap: true,
+            }
           },
-        ],
-        include: /\.module\.css$/,
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
-      },
-      {
-        test: /\.png$/,
-        use: [
           {
-            loader: 'url-loader',
+            loader: 'resolve-url-loader',
             options: {
-              mimetype: 'image/png',
-            },
+              // sourceMap: true,
+            }
           },
+          {
+            loader: 'sass-loader',
+            options: {
+              // sourceMap: true,
+            }
+          }
         ],
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]'
+          }
+        }]
       },
       {
         test: /\.(woff|woff2|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
@@ -63,24 +69,23 @@ const config = {
         ],
       },
       {
-        test: /\.(svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'src/img/',
-            },
-          },
-        ],
+        test: /\.pug$/i,
+        loader: 'pug-loader',
+        options: {
+          attrs: ['img:src', 'link:href']
+        }
       },
     ],
   },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    port: 9000
-  },
+  plugins: [
+    new webpack.SourceMapDevToolPlugin({}),
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'src/index.pug',
+      filename: 'index.html',
+    }),
+  ],
 };
 
 module.exports = config;

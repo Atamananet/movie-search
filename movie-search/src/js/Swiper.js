@@ -1,5 +1,14 @@
 import Swiper from 'swiper';
 import 'swiper/swiper.scss';
+import appendFilms from './appendFilms';
+import alertWithMessage from './alertWithMessage';
+import './description';
+
+import {
+  input,
+  button,
+  searchPage
+} from './variables';
 
 const mySwiper = new Swiper('.swiper-container', {
   navigation: {
@@ -38,6 +47,23 @@ const mySwiper = new Swiper('.swiper-container', {
     el: '.swiper-pagination',
     type: 'bullets',
   },
+});
+
+// load next 10 films when slides end
+mySwiper.on('reachEnd', async () => {
+  if (mySwiper.isEnd && mySwiper.activeIndex > 4 && input.value) {
+    searchPage.implement();
+    button.innerHTML = '<div class="spinner-border" role="status"></div>';
+    const films = await input.getFilmsByTitle(searchPage.current)
+      .catch((error) => alertWithMessage(error.message));
+
+    appendFilms(films)
+      .catch((error) => alertWithMessage(error.message));
+
+    setTimeout(() => {
+      button.innerHTML = 'Search';
+    }, 1500);
+  }
 });
 
 export default mySwiper;

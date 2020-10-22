@@ -1,8 +1,13 @@
 import '../style/keyboard.sass';
 
-function toggleHidden(element) { element.classList.toggle('hidden'); }
+function toggleHidden(element) {
+  element.classList.toggle('hidden');
+}
+
 function mouseupHandler(event) {
-  if (event.target.tagName !== 'SPAN') { return; }
+  if (event.target.tagName !== 'SPAN') {
+    return;
+  }
   if (!event.target.classList.contains('command')) { // commands butons still pressed
     event.target.classList.toggle('pressed');
   }
@@ -14,13 +19,15 @@ class Keyboard {
       'Tab', 'q Q', 'w W', 'e E', 'r R', 't T', 'y Y', 'u U', 'i I', 'o O', 'p P', 'STUB', 'STUB', '',
       'CapsLock', 'a A', 's S', 'd D', 'f F', 'g G', 'h H', 'j J', 'k K', 'l L', '; :', 'STUB', '',
       'Shift', 'z Z', 'x X', 'c C', 'v V', 'b B', 'n N', 'm M', 'Enter', 'STUB', 'STUB', '',
-      'Control', 'Alt', 'Meta', 'Space'];
+      'Control', 'Alt', 'Meta', 'Space'
+    ];
 
     this.RUSSIAN = ['ё Ё', '1 !', '2 "', '3 №', '4 ❤️️', '5 %', '6 :', '7 ?', '8 *', '9 (', '0 )', 'Backspace', '',
       'Tab', 'й Й', 'ц Ц', 'у У', 'к К', 'е Е', 'н Н', 'г Г', 'ш Ш', 'щ Щ', 'з З', 'х Х', 'ъ Ъ', '',
       'CapsLock', 'ф Ф', 'ы Ы', 'в В', 'а А', 'п П', 'р Р', 'о О', 'л Л', 'д Д', 'ж Ж', 'э Э', '',
       'Shift', 'я Я', 'ч Ч', 'с С', 'м М', 'и И', 'т Т', 'ь Ь', 'б Б', 'ю Ю', 'Enter', '',
-      'Control', 'Alt', 'Meta', 'Space'];
+      'Control', 'Alt', 'Meta', 'Space'
+    ];
 
 
     this.alphabet = 'qwertyuiopasdfghjklzxcvbnmёйцукенгшщзхъфывапролджэячсмитьбю'.split('');
@@ -69,9 +76,15 @@ class Keyboard {
     const currBtn = button.toString();
 
 
-    if (currBtn === '') { return 'new line'; }
-    if (this.controls.includes(currBtn)) { return 'command'; }
-    if (this.alphabet.includes(currBtn.toLowerCase())) { return 'letter'; }
+    if (currBtn === '') {
+      return 'new line';
+    }
+    if (this.controls.includes(currBtn)) {
+      return 'command';
+    }
+    if (this.alphabet.includes(currBtn.toLowerCase())) {
+      return 'letter';
+    }
 
     return 'simbol';
   }
@@ -147,33 +160,134 @@ class Keyboard {
 
   // keyboard events handlers
   keydownHandler(event) {
-    if (event.key === 'Tab') { event.preventDefault(); } // avoid focus by TAB button
-    if (event.key === 'Shift') { [...this.characters, ...this.letters].forEach(toggleHidden); }
-    if (event.code === 'CapsLock') { this.letters.forEach(toggleHidden); }
+    if (event.key === 'Tab') {
+      event.preventDefault();
+    } // avoid focus by TAB button
+    if (event.key === 'Shift') {
+      [...this.characters, ...this.letters].forEach(toggleHidden);
+    }
+    if (event.code === 'CapsLock') {
+      this.letters.forEach(toggleHidden);
+    }
     if (event.code === 'Space') { // find element not by 'event.code' == "Space"
       document.querySelectorAll(`#${event.code}`).forEach((i) => i.classList.add('pressed')); // because event.key == ' ';
-    } else { this.togglePressed(event, true); }
+    } else {
+      this.togglePressed(event, true);
+    }
     this.print(event.key); // add .key to textarea
   }
 
   keyupHandler(event) {
-    if (event.code === 'CapsLock') { this.letters.forEach(toggleHidden); }
-    if (event.key === 'Shift') { [...this.characters, ...this.letters].forEach(toggleHidden); }
+    if (event.code === 'CapsLock') {
+      this.letters.forEach(toggleHidden);
+    }
+    if (event.key === 'Shift') {
+      [...this.characters, ...this.letters].forEach(toggleHidden);
+    }
     if (event.code === 'Space') {
       document.querySelectorAll(`#${event.code}`).forEach((i) => i.classList.remove('pressed')); // because event.key == ' ';
-    } else { this.togglePressed(event); }
+    } else {
+      this.togglePressed(event);
+    }
   }
 
   // mouse events handlers
   mousedownHandler(event) {
-    if (event.target.tagName !== 'SPAN') { return; }
+    if (event.target.tagName !== 'SPAN') {
+      return;
+    }
     event.target.classList.toggle('pressed');
-    if (event.target.id === 'CapsLock') { this.letters.forEach(toggleHidden); } // toggle letters
-    if (event.target.id === 'Shift') { [...this.characters, ...this.letters].forEach(toggleHidden); } // toggle letters and simbols
+    if (event.target.id === 'CapsLock') {
+      this.letters.forEach(toggleHidden);
+    } // toggle letters
+    if (event.target.id === 'Shift') {
+      [...this.characters, ...this.letters].forEach(toggleHidden);
+    } // toggle letters and simbols
     this.print(event.target.id); // add to textarea
   }
 
   init() {
+
+    const buttonKeyboard = document.querySelector('.form-search__keyboard');
+    const input = document.querySelector('.form-search__input');
+
+    buttonKeyboard.addEventListener('click', (event) => {
+      event.preventDefault(); // stop sending form
+      const buttonSearch = document.querySelector('.form-search__button');
+      buttonSearch.focus(); // search by Enter button
+
+      document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          e.preventDefault(); // don't search by Space
+        }
+      }, true);
+
+      document.addEventListener('mousedown', (e) => {
+        if (e.target.id === 'Enter') {
+          buttonSearch.click(); // search by virtual Enter
+        }
+      }, true);
+
+      if (!document.querySelector('.keyboard')) {
+
+        keyboard.init();
+        return;
+      }
+
+      const isKeyboardShow = document.querySelector('.keyboard:not([hidden])');
+
+      if (isKeyboardShow) {
+        input.disabled = false; // disable double input (virtual & phisical)
+        input.focus();
+        keyboard.hide();
+        buttonSearch.blur();
+        return;
+      }
+
+      input.disabled = true;
+      keyboard.show();
+    });
+
+
+    // Drag'n'Drop Virtual Keyboard
+    document.addEventListener('mousedown', (event) => {
+      const currKeyboard = event.target.closest('.keyboard');
+
+      if (!currKeyboard) {
+        return;
+      }
+      currKeyboard.classList.add('grabbing');
+      const shiftX = currKeyboard.getBoundingClientRect().left;
+      const shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        document.querySelectorAll('.keyboard').forEach((current) => {
+          current.style.left = `${shiftX}px`;
+          current.style.top = `${pageY - shiftY}px`;
+        });
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.pageX, e.pageY);
+      }
+
+      currKeyboard.style.position = 'absolute';
+      currKeyboard.style.zIndex = 1000;
+      document.body.append(currKeyboard);
+
+      moveAt(event.pageX, event.pageY);
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      currKeyboard.onmouseup = function mouseDropHandler() {
+        document.removeEventListener('mousemove', onMouseMove);
+        currKeyboard.onmouseup = null;
+        currKeyboard.classList.remove('grabbing');
+      };
+    });
+
+    document.ondragstart = () => false;
+
     // create markup and set keyboard layout //
     const engKeyboard = this.createKeyboard(this.ENGLISH);
     const ruKeyboard = this.createKeyboard(this.RUSSIAN);
@@ -243,81 +357,5 @@ const keyboard = new Keyboard({
   switchLanguageKeys: ['Shift', 'CTRL'],
 });
 
-const buttonKeyboard = document.querySelector('.form-search__keyboard');
-const input = document.querySelector('.form-search__input');
-
-buttonKeyboard.addEventListener('click', (event) => {
-  event.preventDefault(); // stop sending form
-  const buttonSearch = document.querySelector('.form-search__button');
-  buttonSearch.focus(); // search by Enter button
-
-  document.addEventListener('keydown', (e) => {
-    if (e.code === 'Space') {
-      e.preventDefault(); // don't search by Space
-    }
-  }, true);
-
-  document.addEventListener('mousedown', (e) => {
-    if (e.target.id === 'Enter') {
-      buttonSearch.click(); // search by virtual Enter
-    }
-  }, true);
-
-  if (!document.querySelector('.keyboard')) {
-    keyboard.init();
-    return;
-  }
-
-  const isKeyboardShow = document.querySelector('.keyboard:not([hidden])');
-
-  if (isKeyboardShow) {
-    input.disabled = false; // disable double input (virtual & phisical)
-    input.focus();
-    keyboard.hide();
-    buttonSearch.blur();
-    return;
-  }
-
-  input.disabled = true;
-  keyboard.show();
-});
-
-
-// Drag'n'Drop Virtual Keyboard
-document.addEventListener('mousedown', (event) => {
-  const currKeyboard = event.target.closest('.keyboard');
-
-  if (!currKeyboard) { return; }
-  currKeyboard.classList.add('grabbing');
-  const shiftX = currKeyboard.getBoundingClientRect().left;
-  const shiftY = event.clientY - currKeyboard.getBoundingClientRect().top;
-
-  function moveAt(pageX, pageY) {
-    document.querySelectorAll('.keyboard').forEach((current) => {
-      current.style.left = `${shiftX}px`;
-      current.style.top = `${pageY - shiftY}px`;
-    });
-  }
-
-  function onMouseMove(e) {
-    moveAt(e.pageX, e.pageY);
-  }
-
-  currKeyboard.style.position = 'absolute';
-  currKeyboard.style.zIndex = 1000;
-  document.body.append(currKeyboard);
-
-  moveAt(event.pageX, event.pageY);
-
-  document.addEventListener('mousemove', onMouseMove);
-
-  currKeyboard.onmouseup = function mouseDropHandler() {
-    document.removeEventListener('mousemove', onMouseMove);
-    currKeyboard.onmouseup = null;
-    currKeyboard.classList.remove('grabbing');
-  };
-});
-
-document.ondragstart = () => false;
 
 export default keyboard;

@@ -5,6 +5,7 @@ import appendFilms from './appendFilms';
 import getFilmsByTitle from './getFilmsByTitle';
 import toEnglish from './toEnglish';
 import isRussian from './isRussian';
+import {  button, input } from './variables';
 
 Element.prototype.getFilmsByTitle = getFilmsByTitle;
 Element.prototype.isRussian = isRussian;
@@ -12,13 +13,10 @@ Element.prototype.toEnglish = toEnglish;
 
 async function searchHandler(event) {
   event.preventDefault(); // disable form sending and page reloading
-
-  const button = document.querySelector('.form-search__button');
   button.innerHTML = '<div class="spinner-border" role="status"><span class="sr-only"></span></div>';
 
   // use Yandex Translate API to detect language
   try {
-    const input = document.querySelector('.form-search__input');
     if (!input.value) {
       throw Error('Yandex API error: empty request');
     }

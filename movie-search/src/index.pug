@@ -1,0 +1,42 @@
+doctype html
+head
+  title Movie Search
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='shortcut icon' href='src/img/favicon.ico' type='image/x-icon')
+  link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+header
+  nav.navbar.navbar-dark.justify-content-center
+    h1.navbar-brand Movie Search
+.container.player-container.d-flex.h-100.fixed-top.align-items-center(hidden='')
+  #player
+.container
+  form.form-search.form-inline.mt-4.justify-content-left(autocomplete='off')
+    input.form-search__input(placeholder='Search' aria-label='Search' maxlength='24' autofocus='')
+    button.form-search__keyboard(type='button')
+      i.fas.fa-keyboard
+    button.form-search__clear(type='button')
+      i.fas.fa-times
+    button.form-search__button(type='submit')
+  .container.container__alert.mt-2
+    .alert.alert-danger.col-12.col-md-8.offset-md-2(role='alert' hidden='')
+      // Alerts here
+    .alert.alert-primary.col-12.col-md-8.offset-md-2(role='alert' hidden='')
+      // Alerts here
+.container.swiper-controls-container.position-relative
+  .swiper.swiper-container
+    .swiper-wrapper
+      // Slides
+    .swiper-pagination
+  .swiper-button-prev
+    i.far.fa-caret-square-left
+  .swiper-button-next
+    i.far.fa-caret-square-right
+footer.fixed-bottom
+  .container
+    nav.navbar.navbar-dark.justify-content-between
+      span.navbar-brand.rolling-scopes RollingScopeSchool
+      a.navbar-brand.github(href='https://github.com/Atamananet')
+        i.fab.fa-github
+        | GitHub
+script(src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js')
